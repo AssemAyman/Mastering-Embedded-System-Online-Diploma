@@ -4,7 +4,7 @@
  Author      : Assem Ayman
  Version     :
  Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
+ Description : print ASCII value of a character in C, Ansi-style
  ============================================================================
  */
 
