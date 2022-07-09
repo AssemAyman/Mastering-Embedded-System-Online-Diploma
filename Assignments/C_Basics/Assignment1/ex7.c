@@ -11,7 +11,7 @@
 #include <stdio.h>
 
 int main(void) {
-	float a,b,temp;
+	float a,b;
 	printf("Enter value of a: ");
 	fflush(stdin); fflush(stdout);
 	scanf("%f",&a);
