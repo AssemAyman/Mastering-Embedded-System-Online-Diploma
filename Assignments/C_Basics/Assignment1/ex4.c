@@ -16,7 +16,6 @@ int main(void) {
 	printf("Enter two numbers: ");
 	fflush(stdout); fflush(stdin);
 	scanf("%f %f",&x,&y);
-	fflush(stdout); fflush(stdin);
 	printf("Product: %f",x*y);
 	return 0;
 }
