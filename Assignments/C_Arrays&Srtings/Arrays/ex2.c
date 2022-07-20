@@ -15,7 +15,7 @@ int main(void) {
 	int n,i;
 	printf("Enter the number of data: ");
 	fflush(stdin); fflush(stdout);
-    scanf("%d",&n);
+        scanf("%d",&n);
 	float a[n],sum=0.0;
     for(i=0; i<n; i++){
     	printf("%d. Enter number: ",i+1);
