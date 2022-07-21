@@ -10,33 +10,33 @@
 
 #include <stdio.h>
 
-void get_prime(int,int);
+int is_prime(int);
+
 int main(void) {
 
-	int x,y;
+	int n1,n2,i;
 
 	printf("Enter two numbers(Intervals): ");
 	fflush(stdin); fflush(stdout);
-	scanf("%d %d",&x,&y);
-	get_prime(x,y);
+	scanf("%d %d",&n1,&n2);
 
+	printf("Prime numbers between %d and %d are: ",n1,n2);
+
+	for(i = n1; i<=n2; i++){
+		if(is_prime(i))
+			printf("%d ",i);
+	}
 	return 0;
 }
 
-void get_prime (int a,int b){
+int is_prime (int i){
 
-	int i,j,isprime=1;
-
-	printf("Prime numbers between %d and %d are: ",a,b);
-	for(i=a; i<b; i++){
-		for(j=2; j<a; j++){
-			if(i % j == 0){
-				isprime = 0;
-				break;
-			}
+	int j,prime = 1;
+	for(j=2; j<i; j++){
+		if(i%j == 0){
+			prime = 0;
+			break;
 		}
-		if(isprime == 1)
-			printf("%d ",i);
-		isprime = 1;
 	}
+	return prime;
 }
