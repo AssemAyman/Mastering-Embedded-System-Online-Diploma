@@ -53,6 +53,6 @@ void print_Data(struct students s[]){
 
 	int i;
     for(i=0; i<10; i++){
-    	printf("Information for roll number %d\nName: %s\nMarks: %0.2f\n",i+1,s[i].name,s[i].marks);
+    	printf("Information for Roll number %d\nName: %s\nMarks: %0.2f\n",i+1,s[i].name,s[i].marks);
     }
 }
