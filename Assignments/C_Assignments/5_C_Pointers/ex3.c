@@ -4,7 +4,7 @@
  Author      : Assem Ayman
  Version     :
  Copyright   : Your copyright notice
- Description :  in C, Ansi-style
+ Description : print a string in reverse using a pointer in C, Ansi-style
  ============================================================================
  */
 
