@@ -1,6 +1,6 @@
 /*
  ============================================================================
- Name        : Platform_Types.c
+ Name        : Platform_Types.h
  Author      : Assem Ayman
  Version     :
  Copyright   : Your copyright notice
