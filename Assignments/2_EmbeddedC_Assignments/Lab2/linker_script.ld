@@ -12,25 +12,25 @@ SECTIONS
 {
 	.text :{
 		*(.vectors*)
-	    *(.text*)
+	        *(.text*)
 		*(.rodata)
 		. = ALIGN(4);
 		_E_text = .;
 	}>flash	
 	
 	.data :{
-	    _S_DATA = .;
+	        _S_DATA = .;
 		*(.data)
 		. = ALIGN(4);
-	    _E_DATA = .;
+	         _E_DATA = .;
 	}>sram AT>flash
 
 	.bss :{
-	    _S_bss = .;
+	        _S_bss = .;
 		*(.bss)
 		*(COMMON)
 		. = ALIGN(4);
-		_E_bss = .;
+		 _E_bss = .;
 	}>sram	
 	
 	. = . + 0X1000;
