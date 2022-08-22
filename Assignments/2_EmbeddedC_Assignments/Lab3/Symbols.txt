@@ -1,0 +1,33 @@
+app.o symbols: -
+    00000000 T main
+____________________________________________
+
+startup.o symbols: -
+             U _E_bss
+             U _E_DATA
+             U _E_text
+             U _S_bss
+             U _S_DATA
+    00000000 T Default_Handler
+    00000000 W H_fault_Handler
+             U main
+    00000000 W NMI_Handler
+    00000000 R p_fn_Vectors
+    0000000c T Reset_Handler
+    00000000 b Stack_top
+______________________________________________
+
+cortex_m4.elf (executable file) symbols: -
+    20000400 B _E_bss
+    20000000 D _E_DATA
+    0000012c T _E_text
+    20000000 B _S_bss
+    20000000 D _S_DATA
+    0000009c T Default_Handler
+    0000009c W H_fault_Handler
+    00000010 T main
+    0000009c W NMI_Handler
+    00000000 T p_fn_Vectors
+    000000a8 T Reset_Handler
+    20000000 b Stack_top
+
