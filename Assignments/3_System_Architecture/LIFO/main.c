@@ -24,29 +24,26 @@ int main(void) {
 
 			switch(status){
 
-			       case LIFO_No_Error:
-				    printf("Pushing: %d\n",i);
-				    break;
+			case LIFO_No_Error:
+				printf("Pushing: %d\n",i);
+				break;
 
-			       case LIFO_Full:
-				    puts("LIFO is Full");
-				    break;
+			case LIFO_Full:
+				puts("LIFO is Full");
+				break;
 			}
 		}
 		printf("\n");
 		//pop elements
 		for(i = 0; i<5; i++){
 			status = LIFO_pop(&UART_buffer,&item);
-			
 			switch(status){
-					
-			      case LIFO_No_Error:
-				   printf("Popping: %d\n",item);
-				   break;
-					
-			     case LIFO_Empty:
-				  puts("LIFO is Empty");
-				  break;
+			case LIFO_No_Error:
+				printf("Popping: %d\n",item);
+				break;
+			case LIFO_Empty:
+				puts("LIFO is Empty");
+				break;
 			}
 		}
 	}else
