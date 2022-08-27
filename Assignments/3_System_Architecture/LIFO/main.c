@@ -23,7 +23,6 @@ int main(void) {
 			status = LIFO_push(&UART_buffer, i);
 
 			switch(status){
-
 			case LIFO_No_Error:
 				printf("Pushing: %d\n",i);
 				break;
@@ -37,10 +36,12 @@ int main(void) {
 		//pop elements
 		for(i = 0; i<5; i++){
 			status = LIFO_pop(&UART_buffer,&item);
+			
 			switch(status){
 			case LIFO_No_Error:
 				printf("Popping: %d\n",item);
 				break;
+					
 			case LIFO_Empty:
 				puts("LIFO is Empty");
 				break;
