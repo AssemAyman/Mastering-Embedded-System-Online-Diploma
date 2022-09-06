@@ -1,0 +1,216 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+HPD_ptr             0x4               High_Pressure_Detection.o
+Pressure_Sensor_State
+                    0x1               main.o
+High_Pressure_Detection_State
+                    0x1               High_Pressure_Detection.o
+Alarm_ptr           0x4               Alarm.o
+Alarm_State         0x1               Alarm.o
+PS_ptr              0x4               Pressure_Sensor.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+flash            0x0000000008000000 0x0000000000020000 xr
+sram             0x0000000020000000 0x0000000000005000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x0000000008000000      0x304
+ *(.vectors*)
+ .vectors       0x0000000008000000       0x1c startup.o
+                0x0000000008000000                vectors
+ *(.text*)
+ .text          0x000000000800001c       0x88 Alarm.o
+                0x000000000800001c                Start_Alarm
+                0x0000000008000038                Stop_Alarm
+                0x0000000008000054                ST_Alarming
+                0x000000000800008c                ST_Idle
+ .text          0x00000000080000a4       0xc4 driver.o
+                0x00000000080000a4                Delay
+                0x00000000080000c4                getPressureVal
+                0x00000000080000dc                Set_Alarm_actuator
+                0x0000000008000118                GPIO_INITIALIZATION
+ .text          0x0000000008000168       0x54 High_Pressure_Detection.o
+                0x0000000008000168                PressureValue
+                0x0000000008000194                ST_Monitor_Pressure
+ .text          0x00000000080001bc       0x48 main.o
+                0x00000000080001bc                main
+ .text          0x0000000008000204       0x70 Pressure_Sensor.o
+                0x0000000008000204                ST_ReadingPressure
+                0x0000000008000244                ST_SendPressure
+ .text          0x0000000008000274       0x90 startup.o
+                0x0000000008000274                Bus_fault
+                0x0000000008000274                MM_fault_Handler
+                0x0000000008000274                Usage_fault_Handler
+                0x0000000008000274                H_fault_Handler
+                0x0000000008000274                Default_Handler
+                0x0000000008000274                NMI_Handler
+                0x0000000008000280                Reset_Handler
+ *(.rodata)
+                0x0000000008000304                . = ALIGN (0x4)
+                0x0000000008000304                _E_text = .
+
+.glue_7         0x0000000008000304        0x0
+ .glue_7        0x0000000008000304        0x0 linker stubs
+
+.glue_7t        0x0000000008000304        0x0
+ .glue_7t       0x0000000008000304        0x0 linker stubs
+
+.vfp11_veneer   0x0000000008000304        0x0
+ .vfp11_veneer  0x0000000008000304        0x0 linker stubs
+
+.v4_bx          0x0000000008000304        0x0
+ .v4_bx         0x0000000008000304        0x0 linker stubs
+
+.iplt           0x0000000008000304        0x0
+ .iplt          0x0000000008000304        0x0 Alarm.o
+
+.rel.dyn        0x0000000008000304        0x0
+ .rel.iplt      0x0000000008000304        0x0 Alarm.o
+
+.data           0x0000000020000000        0x4 load address 0x0000000008000304
+                0x0000000020000000                _S_DATA = .
+ *(.data)
+ .data          0x0000000020000000        0x0 Alarm.o
+ .data          0x0000000020000000        0x0 driver.o
+ .data          0x0000000020000000        0x4 High_Pressure_Detection.o
+ .data          0x0000000020000004        0x0 main.o
+ .data          0x0000000020000004        0x0 Pressure_Sensor.o
+ .data          0x0000000020000004        0x0 startup.o
+                0x0000000020000004                . = ALIGN (0x4)
+                0x0000000020000004                _E_DATA = .
+
+.igot.plt       0x0000000020000004        0x0 load address 0x0000000008000308
+ .igot.plt      0x0000000020000004        0x0 Alarm.o
+
+.bss            0x0000000020000004       0x1c load address 0x0000000008000308
+                0x0000000020000004                _S_bss = .
+ *(.bss)
+ .bss           0x0000000020000004        0x0 Alarm.o
+ .bss           0x0000000020000004        0x0 driver.o
+ .bss           0x0000000020000004        0x4 High_Pressure_Detection.o
+ .bss           0x0000000020000008        0x0 main.o
+ .bss           0x0000000020000008        0x4 Pressure_Sensor.o
+ .bss           0x000000002000000c        0x0 startup.o
+ *(COMMON)
+ COMMON         0x000000002000000c        0x5 Alarm.o
+                0x000000002000000c                Alarm_ptr
+                0x0000000020000010                Alarm_State
+ *fill*         0x0000000020000011        0x3 
+ COMMON         0x0000000020000014        0x5 High_Pressure_Detection.o
+                0x0000000020000014                HPD_ptr
+                0x0000000020000018                High_Pressure_Detection_State
+ COMMON         0x0000000020000019        0x1 main.o
+                0x0000000020000019                Pressure_Sensor_State
+ *fill*         0x000000002000001a        0x2 
+ COMMON         0x000000002000001c        0x4 Pressure_Sensor.o
+                0x000000002000001c                PS_ptr
+                0x0000000020000020                . = ALIGN (0x4)
+                0x0000000020000020                _E_bss = .
+                0x0000000020001020                . = (. + 0x1000)
+                0x0000000020001020                _stack_top = .
+LOAD Alarm.o
+LOAD driver.o
+LOAD High_Pressure_Detection.o
+LOAD main.o
+LOAD Pressure_Sensor.o
+LOAD startup.o
+OUTPUT(HighPressure_Detection.elf elf32-littlearm)
+
+.debug_info     0x0000000000000000     0x3413
+ .debug_info    0x0000000000000000      0xa1c Alarm.o
+ .debug_info    0x0000000000000a1c      0xa05 driver.o
+ .debug_info    0x0000000000001421      0xa1e High_Pressure_Detection.o
+ .debug_info    0x0000000000001e3f      0xa40 main.o
+ .debug_info    0x000000000000287f      0xa03 Pressure_Sensor.o
+ .debug_info    0x0000000000003282      0x191 startup.o
+
+.debug_abbrev   0x0000000000000000      0xa41
+ .debug_abbrev  0x0000000000000000      0x1e1 Alarm.o
+ .debug_abbrev  0x00000000000001e1      0x1de driver.o
+ .debug_abbrev  0x00000000000003bf      0x210 High_Pressure_Detection.o
+ .debug_abbrev  0x00000000000005cf      0x1c0 main.o
+ .debug_abbrev  0x000000000000078f      0x1da Pressure_Sensor.o
+ .debug_abbrev  0x0000000000000969       0xd8 startup.o
+
+.debug_loc      0x0000000000000000      0x3a8
+ .debug_loc     0x0000000000000000       0xe0 Alarm.o
+ .debug_loc     0x00000000000000e0      0x140 driver.o
+ .debug_loc     0x0000000000000220       0x88 High_Pressure_Detection.o
+ .debug_loc     0x00000000000002a8       0x2c main.o
+ .debug_loc     0x00000000000002d4       0x58 Pressure_Sensor.o
+ .debug_loc     0x000000000000032c       0x7c startup.o
+
+.debug_aranges  0x0000000000000000       0xc0
+ .debug_aranges
+                0x0000000000000000       0x20 Alarm.o
+ .debug_aranges
+                0x0000000000000020       0x20 driver.o
+ .debug_aranges
+                0x0000000000000040       0x20 High_Pressure_Detection.o
+ .debug_aranges
+                0x0000000000000060       0x20 main.o
+ .debug_aranges
+                0x0000000000000080       0x20 Pressure_Sensor.o
+ .debug_aranges
+                0x00000000000000a0       0x20 startup.o
+
+.debug_line     0x0000000000000000      0xcdf
+ .debug_line    0x0000000000000000      0x1ef Alarm.o
+ .debug_line    0x00000000000001ef      0x2cc driver.o
+ .debug_line    0x00000000000004bb      0x20c High_Pressure_Detection.o
+ .debug_line    0x00000000000006c7      0x228 main.o
+ .debug_line    0x00000000000008ef      0x1fe Pressure_Sensor.o
+ .debug_line    0x0000000000000aed      0x1f2 startup.o
+
+.debug_str      0x0000000000000000      0x6c7
+ .debug_str     0x0000000000000000      0x521 Alarm.o
+                                        0x58d (size before relaxing)
+ .debug_str     0x0000000000000521       0x57 driver.o
+                                        0x596 (size before relaxing)
+ .debug_str     0x0000000000000578       0x71 High_Pressure_Detection.o
+                                        0x5b8 (size before relaxing)
+ .debug_str     0x00000000000005e9       0x29 main.o
+                                        0x5d7 (size before relaxing)
+ .debug_str     0x0000000000000612       0x35 Pressure_Sensor.o
+                                        0x5aa (size before relaxing)
+ .debug_str     0x0000000000000647       0x80 startup.o
+                                        0x1dd (size before relaxing)
+
+.comment        0x0000000000000000       0x7b
+ .comment       0x0000000000000000       0x7b Alarm.o
+                                         0x7c (size before relaxing)
+ .comment       0x000000000000007b       0x7c driver.o
+ .comment       0x000000000000007b       0x7c High_Pressure_Detection.o
+ .comment       0x000000000000007b       0x7c main.o
+ .comment       0x000000000000007b       0x7c Pressure_Sensor.o
+ .comment       0x000000000000007b       0x7c startup.o
+
+.ARM.attributes
+                0x0000000000000000       0x33
+ .ARM.attributes
+                0x0000000000000000       0x33 Alarm.o
+ .ARM.attributes
+                0x0000000000000033       0x33 driver.o
+ .ARM.attributes
+                0x0000000000000066       0x33 High_Pressure_Detection.o
+ .ARM.attributes
+                0x0000000000000099       0x33 main.o
+ .ARM.attributes
+                0x00000000000000cc       0x33 Pressure_Sensor.o
+ .ARM.attributes
+                0x00000000000000ff       0x33 startup.o
+
+.debug_frame    0x0000000000000000      0x240
+ .debug_frame   0x0000000000000000       0x88 Alarm.o
+ .debug_frame   0x0000000000000088       0xa0 driver.o
+ .debug_frame   0x0000000000000128       0x54 High_Pressure_Detection.o
+ .debug_frame   0x000000000000017c       0x2c main.o
+ .debug_frame   0x00000000000001a8       0x48 Pressure_Sensor.o
+ .debug_frame   0x00000000000001f0       0x50 startup.o
