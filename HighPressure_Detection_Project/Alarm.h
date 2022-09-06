@@ -2,7 +2,7 @@
  * Alarm.h
  *
  *  Created on: Sep 5, 2022
- *      Author: 7ARB
+ *      Author: Assem Ayman
  */
 
 #ifndef ALARM_H_
