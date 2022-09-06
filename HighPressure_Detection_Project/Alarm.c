@@ -2,7 +2,7 @@
  * Alarm.c
  *
  *  Created on: Sep 5, 2022
- *      Author: 7ARB
+ *      Author: Assem Ayman
  */
 
 #include "Alarm.h"
