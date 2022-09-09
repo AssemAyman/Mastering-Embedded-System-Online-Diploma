@@ -117,7 +117,7 @@ FIFO_Status_t add_student_file(){
 				printf("[ERROR] ID %u is already taken\n",temp_ID);
 				puts("------------------------");
 				// Ignore the rest of the line
-			    fscanf(fptr, "%*[^\n]");
+			        fscanf(fptr, "%*[^\n]");
 				unique = 0;
 				break;
 			}
