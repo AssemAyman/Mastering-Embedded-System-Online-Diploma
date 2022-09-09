@@ -110,7 +110,7 @@ FIFO_Status_t add_student_file(){
 	uint32_t temp_ID;
 	while(!feof(fptr) && !ferror(fptr) && (fifo.count != fifo.length)){ //loops till the end of the text file
 		//Check uniqueness of entered ID
-	    uint8_t unique = 1;
+	        uint8_t unique = 1;
 		fscanf(fptr,"%u",&temp_ID);
 		for(int i = 0; i<fifo.count; i++){
 			if(temp_ID == fifo.tail->ID){
