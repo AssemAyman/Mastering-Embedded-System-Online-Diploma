@@ -13,7 +13,7 @@ int main(void)
 	char Pressed_Key;
     LCD_Init();
 	KEYPAD_INIT();
-	LCD_Send_A_String("HI I am Eng/Assem,I live in Egypt and I am 21 years old.");
+	LCD_Send_A_String("HI I'm Eng/Assem,I'm from Alexandria.I study Embedded Systems.");
     while (1) 
     {
 		Pressed_Key = KEYPAD_GET_KEY();
