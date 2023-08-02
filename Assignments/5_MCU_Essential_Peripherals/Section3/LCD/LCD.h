@@ -45,5 +45,5 @@ extern void LCD_Clear_Screen();
 extern void LCD_Goto_XY(unsigned char line,unsigned char position);
 extern void LCD_Display_Number(int Number);
 extern void LCD_Diplay_Real_Number(double Number);
-
+extern void wait_ms(uint32_t time);
 #endif /* LCD_H_ */
