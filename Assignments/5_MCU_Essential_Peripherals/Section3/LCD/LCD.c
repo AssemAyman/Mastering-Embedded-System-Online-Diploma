@@ -14,19 +14,19 @@ void wait_ms(uint32_t time){
 }
 
 void LCD_Kick(){
-	MCAL_GPIOx_WritePin(GPIOA,EN,1);
+	MCAL_GPIOx_WritePin(GPIOA,EN,GPIO_PIN_SET);
 	wait_ms(50);
-	MCAL_GPIOx_WritePin(GPIOA,EN,0);
+	MCAL_GPIOx_WritePin(GPIOA,EN,GPIO_PIN_RESET);
 }
 
 void LCD_Send_Command (unsigned char CMD){
 	//turn RW off so you can write. turn RS off for command mode.
-	MCAL_GPIOx_WritePin(GPIOA,RW,0);
-	MCAL_GPIOx_WritePin(GPIOA,RS,0);
+	MCAL_GPIOx_WritePin(GPIOA,RW,GPIO_PIN_RESET);
+	MCAL_GPIOx_WritePin(GPIOA,RS,GPIO_PIN_RESET);
 
 #ifdef Eight_Bit_MODE
 	//Write the command on D0...D7
-	LCD_DATA = CMD;
+	LCD_DATA = (LCD_DATA & 0xff00) | CMD;
 	LCD_Kick();
 #endif
 
@@ -48,23 +48,23 @@ void LCD_Init(){
 	//PA[8] OUTPUT Push-Pull
 	Pincfg.GPIO_PinNumber = RS;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
-	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_2M;
+	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
 	MCAL_GPIOx_Init(GPIOA,&Pincfg);
 
 	//PA[9] OUTPUT Push-Pull
 	Pincfg.GPIO_PinNumber = RW;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
-	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_2M;
+	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
 	MCAL_GPIOx_Init(GPIOA,&Pincfg);
 
 	//PA[10] OUTPUT Push-Pull
 	Pincfg.GPIO_PinNumber = EN;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
-	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_2M;
+	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
 	MCAL_GPIOx_Init(GPIOA,&Pincfg);
 
 	//turn off enable
-	MCAL_GPIOx_WritePin(GPIOA,EN,0);
+	MCAL_GPIOx_WritePin(GPIOA,EN,GPIO_PIN_RESET);
 
 #ifdef Eight_Bit_MODE
 	//set the port direction as output so you can send information to the LCD.
@@ -73,7 +73,7 @@ void LCD_Init(){
 	for(i=0; i<8; i++){
 		Pincfg.GPIO_PinNumber = pin[i];
 		Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
-		Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_2M;
+		Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
 		MCAL_GPIOx_Init(GPIOA,&Pincfg);
 	}
 	LCD_Send_Command(LCD_8bit_2Line);
@@ -86,7 +86,7 @@ void LCD_Init(){
 	for(i=0; i<4; i++){
 		Pincfg.GPIO_PinNumber = pin[i];
 		Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
-		Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_2M;
+		Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
 		MCAL_GPIOx_Init(GPIOA,&Pincfg);
 	}
 	LCD_Send_Command(0x02);
@@ -100,9 +100,9 @@ void LCD_Init(){
 
 void LCD_Send_A_Character (char data){
 	//turn RW off so you can write.
-	MCAL_GPIOx_WritePin(GPIOA,RW,0);
+	MCAL_GPIOx_WritePin(GPIOA,RW,GPIO_PIN_RESET);
 	//turn RS ON for Data mode.
-	MCAL_GPIOx_WritePin(GPIOA,RS,1);
+	MCAL_GPIOx_WritePin(GPIOA,RS,GPIO_PIN_SET);
 
 #ifdef Eight_Bit_MODE
 	//write data on D0...D7
@@ -121,7 +121,7 @@ void LCD_Send_A_Character (char data){
 }
 
 void LCD_Clear_Screen(){
-	wait_ms(500);
+	//wait_ms(100);
 	LCD_Send_Command(LCD_Clear_Display);
 }
 
