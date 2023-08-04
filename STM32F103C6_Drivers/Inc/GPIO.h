@@ -31,7 +31,7 @@ typedef struct
 }GPIO_PinConfig_t;
 
 //-----------------------------
-//Configuration Macros References
+//Configuration References Macros
 //-----------------------------
 
 //@ref GPIO_PINS_define

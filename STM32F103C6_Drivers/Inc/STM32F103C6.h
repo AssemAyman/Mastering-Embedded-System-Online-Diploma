@@ -19,6 +19,16 @@
 #define FLASH_MEMORY_BASE 	0x08000000UL
 #define SYS_MEMORY_BASE 	0x1FFFF000UL
 #define SRAM_MEMORY_BASE 	0x20000000UL
+//----------------------------
+//NVIC Register Map
+//---------------------------
+#define NVIC_Base			0xE000E100UL
+#define NVIC_ISER0			*(vuint32_t*)(NVIC_Base + 0x0)
+#define NVIC_ISER1			*(vuint32_t*)(NVIC_Base + 0x4)
+#define NVIC_ISER2			*(vuint32_t*)(NVIC_Base + 0x8)
+#define NVIC_ICER0			*(vuint32_t*)(NVIC_Base + 0x80)
+#define NVIC_ICER1			*(vuint32_t*)(NVIC_Base + 0x84)
+#define NVIC_ICER2			*(vuint32_t*)(NVIC_Base + 0x88)
 //-----------------------------
 //Base addresses for  AHB BUS Peripherals
 //-----------------------------
@@ -53,10 +63,7 @@ typedef struct {
 typedef struct {
 	vuint32_t EVCR;
 	vuint32_t MAPR;
-	vuint32_t EXTICR1;
-	vuint32_t EXTICR2;
-	vuint32_t EXTICR3;
-	vuint32_t EXTICR4;
+	vuint32_t EXTICR[4];
 	uint32_t RESERVED;
 	vuint32_t MAPR2;
 }AFIO_REG;
@@ -94,6 +101,7 @@ typedef struct{
 #define GPIOB		((GPIOx_REG *) GPIOB_BASE)
 #define GPIOC		((GPIOx_REG *) GPIOC_BASE)
 #define GPIOD		((GPIOx_REG *) GPIOD_BASE)
+#define AFIO		((AFIO_REG  *) AFIO_BASE)
 #ifndef LQFP48
 #define GPIOE		((GPIOx_REG *) GPIOD_BASE)
 #endif
@@ -104,8 +112,23 @@ typedef struct{
 //-*-*-*-*-*-*-*-*-*-*-*
 #define GPIOx_CLK_EN(x) RCC->APB2ENR |= 1<<(x-63)  //x is either 'A' or 'B' or 'C' .....
 #define AFIO_CLK_EN()   RCC->APB2ENR |= 1<<0
-//-*-*-*-*-*-*-*-*-*-*-*-
-//Generic Macros:
-//-*-*-*-*-*-*-*-*-*-*-*
+//-*-*-*-*-*-*-*-*-*-*-*-*-
+//NVIC IRQ Enable/Disable Macros:
+//-*-*-*-*-*-*-*-*-*-*-*-*-
+#define NVIC_IRQ6_EXTI0_Enable()		NVIC_ISER0 |=1<<6
+#define NVIC_IRQ7_EXTI1_Enable()		NVIC_ISER0 |=1<<7
+#define NVIC_IRQ8_EXTI2_Enable()		NVIC_ISER0 |=1<<8
+#define NVIC_IRQ9_EXTI3_Enable()		NVIC_ISER0 |=1<<9
+#define NVIC_IRQ10_EXTI4_Enable()		NVIC_ISER0 |=1<<10
+#define NVIC_IRQ23_EXTI5_9_Enable()		NVIC_ISER0 |=1<<23
+#define NVIC_IRQ40_EXTI10_15_Enable()	NVIC_ISER1 |=1<<8
+
+#define NVIC_IRQ6_EXTI0_Disable()		NVIC_ICER0 |=1<<6
+#define NVIC_IRQ7_EXTI1_Disable()		NVIC_ICER0 |=1<<7
+#define NVIC_IRQ8_EXTI2_Disable()		NVIC_ICER0 |=1<<8
+#define NVIC_IRQ9_EXTI3_Disable()		NVIC_ICER0 |=1<<9
+#define NVIC_IRQ10_EXTI4_Disable()		NVIC_ICER0 |=1<<10
+#define NVIC_IRQ23_EXTI5_9_Disable()	NVIC_ICER0 |=1<<23
+#define NVIC_IRQ40_EXTI10_15_Disable()	NVIC_ICER1 |=1<<8
 
 #endif /* STM32F103C6_H_ */
