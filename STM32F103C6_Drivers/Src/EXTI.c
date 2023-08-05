@@ -98,7 +98,7 @@ void MCAL_EXTI_GPIO_Init(EXTI_PinConfig_t* EXTI_Config){
 		break;
 	}
 	//========================
-	// 5- Set IRQ_CllBack function
+	// 5- Set IRQ_CallBack function
 	g_P_IRQ_CallBack[EXTI_Config->EXTI_PIN.EXTIx] = EXTI_Config->P_IRQ_CallBack;
 
 }
