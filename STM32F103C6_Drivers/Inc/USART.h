@@ -66,7 +66,7 @@ typedef struct{
 //@ref USART_Parity_define
 #define USART_Parity_NONE		0
 #define USART_Parity_EVEN		1<<10
-#define USART_Parity_ODD		1<<9 | 1<<10
+#define USART_Parity_ODD		(1<<9 | 1<<10)
 
 //@ref USART_StopBits_define
 #define USART_StopBits_half		1<<12
@@ -78,7 +78,7 @@ typedef struct{
 #define USART_HwFlowCtl_NONE		0
 #define USART_HwFlowCtl_RTS			1<<8	// Bit 8 RTSE: RTS enable
 #define USART_HwFlowCtl_CTS			1<<9	// Bit 9 CTSE: CTS enable
-#define USART_HwFlowCtl_RTS_CTS		1<<8 | 1<<9
+#define USART_HwFlowCtl_RTS_CTS		(1<<8 | 1<<9)
 
 //@ref USART_IRQ_Enable_define
 #define USART_IRQ_Enable_NONE		0
@@ -86,7 +86,7 @@ typedef struct{
 #define USART_IRQ_Enable_TC			1<<6
 #define USART_IRQ_Enable_RXNE		1<<5
 #define USART_IRQ_Enable_PE			1<<8
-#define USART_IRQ_Enable_TXE_RXNE	1<<7 | 1<<5
+#define USART_IRQ_Enable_TXE_RXNE	(1<<7 | 1<<5)
 
 
 typedef enum{

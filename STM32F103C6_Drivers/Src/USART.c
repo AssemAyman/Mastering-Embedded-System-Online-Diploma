@@ -226,7 +226,7 @@ void MCAL_UASRT_GPIO_Set_Pins(USARTx_REG* USARTx){
 		}
 	}
 
-	if(USARTx == USART2){
+	else if(USARTx == USART2){
 
 		//TX PA2
 		pincfg.GPIO_PinNumber = GPIO_PIN_2;
@@ -255,7 +255,7 @@ void MCAL_UASRT_GPIO_Set_Pins(USARTx_REG* USARTx){
 		}
 	}
 
-	if(USARTx == USART3){
+	else if(USARTx == USART3){
 
 		//TX PB10
 		pincfg.GPIO_PinNumber = GPIO_PIN_10;
@@ -372,7 +372,7 @@ void MCAL_USART_WAIT_TC(USARTx_REG* USARTx){
 	while(!(USARTx->SR & 1<<6));
 }
 
-/*==========================ISR=============*/
+/*==============ISR=============*/
 void USART1_IRQHandler (void)
 {
 	Global_USART_Config[0]->P_IRQ_CallBack();

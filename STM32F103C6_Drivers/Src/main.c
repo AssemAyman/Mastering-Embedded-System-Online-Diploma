@@ -19,8 +19,6 @@
 
 #include"USART.h"
 
-
-
 int main(void)
 {
 
@@ -37,7 +35,6 @@ int main(void)
 	MCAL_USART_Init(USART1, &USART1cfg);
 
 	GPIOx_CLK_EN('A');
-	GPIOx_CLK_EN('B');
 
 	MCAL_UASRT_GPIO_Set_Pins(USART1);
 
