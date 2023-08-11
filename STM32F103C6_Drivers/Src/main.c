@@ -19,6 +19,15 @@
 
 #include"USART.h"
 
+uint16_t buffer;
+
+void UART_IRQ_Callback(){
+
+	MCAL_USART_ReceiveData(USART1, &buffer, disable);
+	MCAL_USART_SendData(USART1, &buffer, enable);
+
+}
+
 int main(void)
 {
 
@@ -30,7 +39,8 @@ int main(void)
 	USART1cfg.Parity = USART_Parity_NONE;
 	USART1cfg.StopBits = USART_StopBits_1;
 	USART1cfg.HwFlowCtl = USART_HwFlowCtl_NONE;
-	USART1cfg.IRQ_Enable = USART_IRQ_Enable_NONE;
+	USART1cfg.IRQ_Enable = USART_IRQ_Enable_RXNE;
+	USART1cfg.P_IRQ_CallBack = UART_IRQ_Callback;
 
 	MCAL_USART_Init(USART1, &USART1cfg);
 
@@ -38,10 +48,7 @@ int main(void)
 
 	MCAL_UASRT_GPIO_Set_Pins(USART1);
 
-	uint16_t buffer;
 
-	while(1){
-		MCAL_USART_ReceiveData(USART1, &buffer, enable);
-		MCAL_USART_SendData(USART1, &buffer, enable);
-	}
+	while(1);
+
 }

@@ -86,7 +86,6 @@ typedef struct{
 #define USART_IRQ_Enable_TC			1<<6
 #define USART_IRQ_Enable_RXNE		1<<5
 #define USART_IRQ_Enable_PE			1<<8
-#define USART_IRQ_Enable_TXE_RXNE	(1<<7 | 1<<5)
 
 
 typedef enum{

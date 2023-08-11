@@ -156,7 +156,7 @@ void MCAL_USART_SendData(USARTx_REG* USARTx,uint16_t* pTxbuffer,Polling_Mechanis
 		}
 	}
 
-	if(USARTx == USART2){
+	else if(USARTx == USART2){
 
 		switch(Global_USART_Config[1]->Payload_Length){
 
@@ -171,7 +171,7 @@ void MCAL_USART_SendData(USARTx_REG* USARTx,uint16_t* pTxbuffer,Polling_Mechanis
 		}
 	}
 
-	if(USARTx == USART3){
+	else if(USARTx == USART3){
 
 		switch(Global_USART_Config[2]->Payload_Length){
 
@@ -317,7 +317,7 @@ void MCAL_USART_ReceiveData(USARTx_REG* USARTx,uint16_t* pRxbuffer,Polling_Mecha
 		}
 	}
 
-	if(USARTx == USART2){
+	else if(USARTx == USART2){
 		//Check Payload
 		switch(Global_USART_Config[1]->Payload_Length){
 		// 9 bits data
@@ -341,7 +341,7 @@ void MCAL_USART_ReceiveData(USARTx_REG* USARTx,uint16_t* pRxbuffer,Polling_Mecha
 		}
 	}
 
-	if(USARTx == USART3){
+	else if(USARTx == USART3){
 		//Check Payload
 		switch(Global_USART_Config[2]->Payload_Length){
 		// 9 bits data
