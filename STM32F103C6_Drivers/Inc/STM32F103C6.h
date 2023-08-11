@@ -34,17 +34,23 @@
 //-----------------------------
 #define RCC_BASE 0x40021000
 //-----------------------------
+//Base addresses for  APB1 BUS Peripherals
+//-----------------------------
+#define USART2_BASE 0x40004400UL
+#define USART3_BASE 0x40004800UL
+//-----------------------------
 //Base addresses for  APB2 BUS Peripherals
 //-----------------------------
-#define GPIOA_BASE 0x40010800UL
-#define GPIOB_BASE 0x40010C00UL
-#define GPIOC_BASE 0x40011000UL
-#define GPIOD_BASE 0x40011400UL
+#define GPIOA_BASE  0x40010800UL
+#define GPIOB_BASE  0x40010C00UL
+#define GPIOC_BASE  0x40011000UL
+#define GPIOD_BASE  0x40011400UL
 #ifndef LQFP48
-#define GPIOE_BASE 0x40011800UL
+#define GPIOE_BASE  0x40011800UL
 #endif
-#define EXTI_BASE  0x40010400UL
-#define AFIO_BASE  0x40010000UL
+#define EXTI_BASE   0x40010400UL
+#define AFIO_BASE   0x40010000UL
+#define USART1_BASE 0x40013800UL
 //-*-*-*-*-*-*-*-*-*-*-*-
 //Peripheral register: GPIOx
 //-*-*-*-*-*-*-*-*-*-*-*
@@ -93,6 +99,18 @@ typedef struct{
 	vuint32_t BDCR;
 	vuint32_t CSR;
 }RCC_REG;
+//-*-*-*-*-*-*-*-*-*-*-*-
+//Peripheral register: USART
+//-*-*-*-*-*-*-*-*-*-*-*
+typedef struct{
+	vuint32_t SR;
+	vuint32_t DR;
+	vuint32_t BRR;
+	vuint32_t CR1;
+	vuint32_t CR2;
+	vuint32_t CR3;
+	vuint32_t GTPR;
+}USARTx_REG;
 
 //-*-*-*-*-*-*-*-*-*-*-*-
 //Peripheral Instants:
@@ -107,14 +125,21 @@ typedef struct{
 #endif
 #define RCC   		((RCC_REG   *) RCC_BASE)
 #define EXTI	    ((EXTI_REG  *) EXTI_BASE)
+#define USART1		((USARTx_REG*) USART1_BASE)
+#define USART2		((USARTx_REG*) USART2_BASE)
+#define USART3		((USARTx_REG*) USART3_BASE)
 //-*-*-*-*-*-*-*-*-*-*-*-
 //clock enable Macros:
 //-*-*-*-*-*-*-*-*-*-*-*
-#define GPIOx_CLK_EN(x) RCC->APB2ENR |= 1<<(x-63)  //x is either 'A' or 'B' or 'C' .....
-#define AFIO_CLK_EN()   RCC->APB2ENR |= 1<<0
+#define GPIOx_CLK_EN(x)  RCC->APB2ENR |= 1<<(x-63)  //x is either 'A' or 'B' or 'C' .....
+#define AFIO_CLK_EN()    RCC->APB2ENR |= 1<<0
+#define USART1_CLK_EN()  RCC->APB2ENR |= 1<<14
+#define USART2_CLK_EN()  RCC->APB1ENR |= 1<<17
+#define USART3_CLK_EN()  RCC->APB1ENR |= 1<<18
 //-*-*-*-*-*-*-*-*-*-*-*-*-
 //NVIC IRQ Enable/Disable Macros:
 //-*-*-*-*-*-*-*-*-*-*-*-*-
+//Enable EXTI IRQ
 #define NVIC_IRQ6_EXTI0_Enable()		NVIC_ISER0 |=1<<6
 #define NVIC_IRQ7_EXTI1_Enable()		NVIC_ISER0 |=1<<7
 #define NVIC_IRQ8_EXTI2_Enable()		NVIC_ISER0 |=1<<8
@@ -122,7 +147,12 @@ typedef struct{
 #define NVIC_IRQ10_EXTI4_Enable()		NVIC_ISER0 |=1<<10
 #define NVIC_IRQ23_EXTI5_9_Enable()		NVIC_ISER0 |=1<<23
 #define NVIC_IRQ40_EXTI10_15_Enable()	NVIC_ISER1 |=1<<8
+//Enable UARTx IRQ
+#define NVIC_IRQ37_USART1_Enable()		NVIC_ISER1 |=1<<5
+#define NVIC_IRQ38_USART2_Enable()		NVIC_ISER1 |=1<<6
+#define NVIC_IRQ39_USART3_Enable()		NVIC_ISER1 |=1<<7
 
+//Disable EXTI IRQ
 #define NVIC_IRQ6_EXTI0_Disable()		NVIC_ICER0 |=1<<6
 #define NVIC_IRQ7_EXTI1_Disable()		NVIC_ICER0 |=1<<7
 #define NVIC_IRQ8_EXTI2_Disable()		NVIC_ICER0 |=1<<8
@@ -130,5 +160,9 @@ typedef struct{
 #define NVIC_IRQ10_EXTI4_Disable()		NVIC_ICER0 |=1<<10
 #define NVIC_IRQ23_EXTI5_9_Disable()	NVIC_ICER0 |=1<<23
 #define NVIC_IRQ40_EXTI10_15_Disable()	NVIC_ICER1 |=1<<8
+//Disable USART IRQ
+#define NVIC_IRQ37_USART1_Disable()		NVIC_ICER1 |=1<<5
+#define NVIC_IRQ38_USART2_Disable()		NVIC_ICER1 |=1<<6
+#define NVIC_IRQ39_USART3_Disable()		NVIC_ICER1 |=1<<7
 
 #endif /* STM32F103C6_H_ */
