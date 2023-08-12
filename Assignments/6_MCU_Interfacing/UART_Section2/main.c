@@ -8,7 +8,6 @@
 #include "UART/UART.h"
 #include "LCD/LCD.h"
 
-extern char* p_buffer;
 
 int main(void)
 {
