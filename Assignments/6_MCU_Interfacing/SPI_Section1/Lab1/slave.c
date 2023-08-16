@@ -25,7 +25,7 @@ unsigned char SPI_Slave_Receive(unsigned char data){
 	SPDR = data;
 	// Wait for transmission complete
 	while(!(SPSR & 1<<SPIF));
-	// return the received data from the slave
+	// return the received data from the master
 	return SPDR;
 }
 
