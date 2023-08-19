@@ -17,19 +17,29 @@
  ******************************************************************************
  */
 
-#include"USART.h"
+#include "USART.h"
+#include "SPI.h"
+
+#define Master
+//#define Slave
 
 uint16_t buffer;
 
-void UART_IRQ_Callback(){
-
+void USART1_IRQ_CallBack(){
+#ifdef Master
 	MCAL_USART_ReceiveData(USART1, &buffer, disable);
-	MCAL_USART_SendData(USART1, &buffer, enable);
-
+	MCAL_USART_SendData(USART1, &buffer,enable);
+	MCAL_GPIOx_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+	MCAL_SPI_TX_RX(SPI1, &buffer, Enable);
+	MCAL_GPIOx_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+#endif
 }
 
 int main(void)
 {
+
+	GPIOx_CLK_EN('A');
+	MCAL_UASRT_GPIO_Set_Pins(USART1);
 
 	USART_Config_t USART1cfg ;
 
@@ -40,14 +50,43 @@ int main(void)
 	USART1cfg.StopBits = USART_StopBits_1;
 	USART1cfg.HwFlowCtl = USART_HwFlowCtl_NONE;
 	USART1cfg.IRQ_Enable = USART_IRQ_Enable_RXNE;
-	USART1cfg.P_IRQ_CallBack = UART_IRQ_Callback;
+	USART1cfg.P_IRQ_CallBack = USART1_IRQ_CallBack;
 
 	MCAL_USART_Init(USART1, &USART1cfg);
 
-	GPIOx_CLK_EN('A');
+	SPI_Config_t SPI1cfg;
 
-	MCAL_UASRT_GPIO_Set_Pins(USART1);
+	SPI1cfg.BaudRate_Prescaler = SPI_BAUDERATE_PRESCALER_8;
+	SPI1cfg.CLK_Phase = SPI_CLK_PHASE_SecondEdge_Capture;
+	SPI1cfg.CLK_Polarity = SPI_CLK_POLARITY_IDLE_HIGH;
+	SPI1cfg.Communication_Mode = SPI_Communication_Mode_2LINE_FULL_DUPLEX;
+	SPI1cfg.DataSize = SPI_DataSize_8bit;
+	SPI1cfg.Frame_Format = SPI_Frame_Format_MSB_First;
+	SPI1cfg.IRQ_Enable = SPI_IRQ_Enable_None;
+	SPI1cfg.P_IRQ_CallBack = NULL;
 
+#ifdef Master
+	SPI1cfg.SPI_Mode = SPI_MODE_Master;
+	SPI1cfg.NSS = SPI_NSS_SW_Master;
+
+#endif
+
+#ifdef Slave
+	SPI1cfg.SPI_Mode = SPI_MODE_Slave;
+	SPI1cfg.NSS = SPI_NSS_SW_Slave;
+#endif
+
+	MCAL_SPI_Init(SPI1, &SPI1cfg);
+	MCAL_SPI_GPIO_Set_Pins(SPI1);
+	/*Configure SS on PA4 */
+	GPIO_PinConfig_t GPIOcfg;
+
+	GPIOcfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+	GPIOcfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
+	GPIOcfg.GPIO_PinNumber = GPIO_PIN_4;
+
+	MCAL_GPIOx_Init(GPIOA, &GPIOcfg);
+	MCAL_GPIOx_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 
 	while(1);
 

@@ -38,6 +38,7 @@
 //-----------------------------
 #define USART2_BASE 0x40004400UL
 #define USART3_BASE 0x40004800UL
+#define SPI2_BASE	0x40003800UL
 //-----------------------------
 //Base addresses for  APB2 BUS Peripherals
 //-----------------------------
@@ -51,6 +52,7 @@
 #define EXTI_BASE   0x40010400UL
 #define AFIO_BASE   0x40010000UL
 #define USART1_BASE 0x40013800UL
+#define SPI1_BASE	0x40013000UL
 //-*-*-*-*-*-*-*-*-*-*-*-
 //Peripheral register: GPIOx
 //-*-*-*-*-*-*-*-*-*-*-*
@@ -111,7 +113,20 @@ typedef struct{
 	vuint32_t CR3;
 	vuint32_t GTPR;
 }USARTx_REG;
-
+//-*-*-*-*-*-*-*-*-*-*-*-
+//Peripheral register: SPI
+//-*-*-*-*-*-*-*-*-*-*-*
+typedef struct{
+	vuint32_t CR1;
+	vuint32_t CR2;
+	vuint32_t SR;
+	vuint32_t DR;
+	vuint32_t CRCPR;
+	vuint32_t RXCRCR;
+	vuint32_t TXCRCR;
+	vuint32_t I2SCFGR;
+	vuint32_t I2SPR;
+}SPIx_REG;
 //-*-*-*-*-*-*-*-*-*-*-*-
 //Peripheral Instants:
 //-*-*-*-*-*-*-*-*-*-*-*
@@ -128,6 +143,8 @@ typedef struct{
 #define USART1		((USARTx_REG*) USART1_BASE)
 #define USART2		((USARTx_REG*) USART2_BASE)
 #define USART3		((USARTx_REG*) USART3_BASE)
+#define SPI1		((SPIx_REG  *) SPI1_BASE)
+#define SPI2		((SPIx_REG  *) SPI2_BASE)
 //-*-*-*-*-*-*-*-*-*-*-*-
 //clock enable Macros:
 //-*-*-*-*-*-*-*-*-*-*-*
@@ -136,6 +153,8 @@ typedef struct{
 #define USART1_CLK_EN()  RCC->APB2ENR |= 1<<14
 #define USART2_CLK_EN()  RCC->APB1ENR |= 1<<17
 #define USART3_CLK_EN()  RCC->APB1ENR |= 1<<18
+#define SPI1_CLK_EN()    RCC->APB2ENR |= 1<<12
+#define SPI2_CLK_EN()    RCC->APB1ENR |= 1<<14
 //-*-*-*-*-*-*-*-*-*-*-*-*-
 //NVIC IRQ Enable/Disable Macros:
 //-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -164,5 +183,12 @@ typedef struct{
 #define NVIC_IRQ37_USART1_Disable()		NVIC_ICER1 |=1<<5
 #define NVIC_IRQ38_USART2_Disable()		NVIC_ICER1 |=1<<6
 #define NVIC_IRQ39_USART3_Disable()		NVIC_ICER1 |=1<<7
+
+//Enable SPI IRQ
+#define NVIC_IRQ35_SPI1_Enable()		NVIC_ISER1 |=1<<3
+#define NVIC_IRQ36_SPI2_Enable()		NVIC_ISER1 |=1<<4
+//Disable SPI IRQ
+#define NVIC_IRQ35_SPI1_Disable()		NVIC_ICER1 |=1<<3
+#define NVIC_IRQ36_SPI2_Disable()		NVIC_ICER1 |=1<<4
 
 #endif /* STM32F103C6_H_ */
