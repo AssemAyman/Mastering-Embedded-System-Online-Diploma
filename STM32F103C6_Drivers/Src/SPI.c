@@ -285,13 +285,17 @@ void MCAL_SPI_ReceiveData(SPIx_REG* SPIx,uint16_t* p_Rxbuffer,PollingMechanism P
  * Note 			- None
  */
 void MCAL_SPI_TX_RX(SPIx_REG* SPIx,uint16_t* p_buffer,PollingMechanism Polling){
-	if(Polling == Enable){
+	if(Polling == Enable)
+	{
 		while(!(SPIx->SR & 1<<1));  //Wait until Tx buffer is empty to send data
-		SPIx->DR = *p_buffer;
-
-		while(!(SPIx->SR & 1)); //Wait until Rx buffer is not empty to receive data
-		*p_buffer = SPIx->DR ;
 	}
+	SPIx->DR = *p_buffer;
+
+	if(Polling == Enable)
+	{
+		while(!(SPIx->SR & 1)); //Wait until Rx buffer is not empty to receive data
+	}
+	*p_buffer = SPIx->DR ;
 }
 
 /* ================================================================ */

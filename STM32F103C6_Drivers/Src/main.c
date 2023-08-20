@@ -20,8 +20,8 @@
 #include "USART.h"
 #include "SPI.h"
 
-#define Master
-//#define Slave
+//#define Master
+#define Slave
 
 uint16_t buffer;
 
@@ -35,6 +35,15 @@ void USART1_IRQ_CallBack(){
 #endif
 }
 
+void SPI1_IRQ_CallBack(S_IRQ_SRC_t irq_src){
+#ifdef Slave
+	if(irq_src.RXNE){
+	MCAL_SPI_ReceiveData(SPI1, &buffer, Disable);
+	MCAL_USART_SendData(USART1, &buffer, enable);
+	}
+#endif
+}
+
 int main(void)
 {
 
@@ -43,16 +52,17 @@ int main(void)
 
 	USART_Config_t USART1cfg ;
 
-	USART1cfg.USART_Mode = USART_Mode_Tx_Rx;
+	USART1cfg.USART_Mode = USART_Mode_Tx;
 	USART1cfg.BaudRate = USART_BaudRate_115200;
 	USART1cfg.Payload_Length = USART_Payload_Length_8B;
 	USART1cfg.Parity = USART_Parity_NONE;
 	USART1cfg.StopBits = USART_StopBits_1;
 	USART1cfg.HwFlowCtl = USART_HwFlowCtl_NONE;
-	USART1cfg.IRQ_Enable = USART_IRQ_Enable_RXNE;
-	USART1cfg.P_IRQ_CallBack = USART1_IRQ_CallBack;
+	USART1cfg.IRQ_Enable = USART_IRQ_Enable_NONE;
+	USART1cfg.P_IRQ_CallBack = NULL;
 
 	MCAL_USART_Init(USART1, &USART1cfg);
+
 
 	SPI_Config_t SPI1cfg;
 
@@ -62,22 +72,13 @@ int main(void)
 	SPI1cfg.Communication_Mode = SPI_Communication_Mode_2LINE_FULL_DUPLEX;
 	SPI1cfg.DataSize = SPI_DataSize_8bit;
 	SPI1cfg.Frame_Format = SPI_Frame_Format_MSB_First;
-	SPI1cfg.IRQ_Enable = SPI_IRQ_Enable_None;
-	SPI1cfg.P_IRQ_CallBack = NULL;
 
 #ifdef Master
 	SPI1cfg.SPI_Mode = SPI_MODE_Master;
 	SPI1cfg.NSS = SPI_NSS_SW_Master;
+	SPI1cfg.IRQ_Enable = SPI_IRQ_Enable_None;
+	SPI1cfg.P_IRQ_CallBack = NULL;
 
-#endif
-
-#ifdef Slave
-	SPI1cfg.SPI_Mode = SPI_MODE_Slave;
-	SPI1cfg.NSS = SPI_NSS_SW_Slave;
-#endif
-
-	MCAL_SPI_Init(SPI1, &SPI1cfg);
-	MCAL_SPI_GPIO_Set_Pins(SPI1);
 	/*Configure SS on PA4 */
 	GPIO_PinConfig_t GPIOcfg;
 
@@ -87,6 +88,17 @@ int main(void)
 
 	MCAL_GPIOx_Init(GPIOA, &GPIOcfg);
 	MCAL_GPIOx_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+#endif
+
+#ifdef Slave
+	SPI1cfg.SPI_Mode = SPI_MODE_Slave;
+	SPI1cfg.NSS = SPI_NSS_HW_Slave;
+	SPI1cfg.IRQ_Enable = SPI_IRQ_Enable_RXNEIE;
+	SPI1cfg.P_IRQ_CallBack = SPI1_IRQ_CallBack;
+#endif
+
+	MCAL_SPI_Init(SPI1, &SPI1cfg);
+	MCAL_SPI_GPIO_Set_Pins(SPI1);
 
 	while(1);
 
