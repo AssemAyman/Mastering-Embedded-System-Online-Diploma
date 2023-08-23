@@ -1,5 +1,5 @@
 /*
- * I2C_Section.c
+ * master.c
  *
  * Created: 8/22/2023 5:07:44 PM
  * Author : assem
@@ -63,4 +63,3 @@ int main(void)
 		I2C_stop(); //transmit STOP condition
     }
 }
-
