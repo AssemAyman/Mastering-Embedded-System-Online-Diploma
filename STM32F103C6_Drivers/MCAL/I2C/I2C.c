@@ -225,7 +225,7 @@ void MCAL_I2C_Master_RX(I2Cx_REG* I2Cx,uint8_t slaveAddr,uint8_t* p_datain,uint1
 		p_datain[i] = I2Cx->DR;
 
 		//if the slave sends The penultimate data -> disable Acknowledgement from master
-		if(i == dataLen - 1)
+		if(i == 2)
 			I2Cx->CR1 &= ~(1<<10);
 	}
 
