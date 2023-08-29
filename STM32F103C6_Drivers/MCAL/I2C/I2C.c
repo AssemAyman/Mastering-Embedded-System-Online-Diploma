@@ -280,7 +280,7 @@ void I2C_GenerateSTART(I2Cx_REG* I2Cx,START_Condition start){
 Flag_Status I2C_GetFlagStatus(I2Cx_REG* I2Cx, Flag flag){
 
 	Flag_Status bit_status;
-	uint32_t event = I2Cx->SR1 | I2Cx->SR2 << 16;
+	uint32_t event;
 
 	switch(flag){
 
@@ -302,6 +302,7 @@ Flag_Status I2C_GetFlagStatus(I2Cx_REG* I2Cx, Flag flag){
 		break;
 
 	case EV8_1:
+		event = I2Cx->SR1 | I2Cx->SR2 << 16;
 		/* Check if BUSY ,TRA ,MSL ,TXE flags are all set */
 		bit_status = event & EV8_1 ? SET : RESET;
 		break;
