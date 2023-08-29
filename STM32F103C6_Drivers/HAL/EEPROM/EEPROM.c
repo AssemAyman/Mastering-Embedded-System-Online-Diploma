@@ -28,8 +28,8 @@ void HAL_EEPROM_Send(I2Cx_REG* I2CX, uint8_t* p_dataOut,uint16_t dataLen,uint16_
 
 	uint8_t buffer[2];
 
-	buffer[0] = (uint8_t)Mem_Add >> 8;  //Higher_Mem_Add
-	buffer[1] = (uint8_t)Mem_Add ;	    //Lower_Mem_Add
+	buffer[0] = Mem_Add >> 8;  //Higher_Mem_Add
+	buffer[1] = Mem_Add ;	    //Lower_Mem_Add
 
 	//Write Address only
 	MCAL_I2C_Master_TX(I2CX, EEPROM_Slave_Address, buffer, 2, without_Stop, START);
@@ -43,8 +43,8 @@ void HAL_EEPROM_Receive(I2Cx_REG* I2CX, uint8_t* p_datain,uint16_t dataLen,uint1
 
 	uint8_t buffer[dataLen + 2] ;
 
-	buffer[0] = (uint8_t)Mem_Add >> 8;  //Higher_Mem_Add
-	buffer[1] = (uint8_t)Mem_Add ;		//Higher_Mem_Add
+	buffer[0] = Mem_Add >> 8;  //Higher_Mem_Add
+	buffer[1] = Mem_Add ;		//Higher_Mem_Add
 
 	for(int i = 2; i<dataLen+2; i++)
 		buffer[i] = p_datain[i-2];
