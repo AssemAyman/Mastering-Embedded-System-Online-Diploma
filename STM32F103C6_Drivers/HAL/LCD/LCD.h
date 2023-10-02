@@ -11,10 +11,15 @@
 
 #include "GPIO.h"
 
-#define LCD_DATA 	  GPIOA->ODR
-#define RS GPIO_PIN_8
-#define RW GPIO_PIN_9
-#define EN GPIO_PIN_10
+#define Read_Bit(reg,index)		((reg & 1<<index)>>index)
+
+/*=========Configurations============*/
+#define LCD_DATA 	GPIOA->ODR
+#define LCD_PORT	GPIOA
+#define RS 			GPIO_PIN_8
+#define RW 			GPIO_PIN_9
+#define EN 			GPIO_PIN_10
+/*==================================*/
 
 #define LCD_8bit_1Line        0x30
 #define LCD_8bit_2Line        0x38
@@ -34,8 +39,8 @@
 #define LCD_Start_At_Beginning_Of_Second_Line 0xC0
 #define LCD_Two_Lines_5_7_Matrix 0x38
 #define Data_Shift   4
-#define Eight_Bit_MODE
-//#define FOUR_Bit_MODE
+//#define Eight_Bit_MODE
+#define FOUR_Bit_MODE
 
 extern void LCD_Send_Command (unsigned char CMD);
 extern void LCD_Send_A_Character (char data);
@@ -46,4 +51,5 @@ extern void LCD_Goto_XY(unsigned char line,unsigned char position);
 extern void LCD_Display_Number(int Number);
 extern void LCD_Diplay_Real_Number(double Number);
 extern void wait_ms(uint32_t time);
+
 #endif /* LCD_H_ */
