@@ -17,51 +17,36 @@
  ******************************************************************************
  */
 
-typedef volatile unsigned int vuint32_t ;
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdio.h>
-// GPIO registers
-#define GPIOA_BASE 0x40010800
-#define AFIO_Base 0x40010000
+#include "Platform_Types.h"
+#include "GPIO.h"
+#include "LCD.h"
+#include "EXTI.h"
 
-#define GPIOA_CRH *(volatile uint32_t *)(GPIOA_BASE + 0x04)
-#define GPIOA_CRL *(volatile uint32_t *)(GPIOA_BASE + 0x00)
-#define GPIOA_ODR *(volatile uint32_t *)(GPIOA_BASE + 0x0C)
-#define AFIO_EXTICR1 *(volatile uint32_t *)(AFIO_Base + 0x08)
-//Clock Registers
-#define RCC_BASE 0x40021000
-#define RCC_APB2ENR *(volatile uint32_t *)(RCC_BASE + 0x18)
-//EXTI Registers And NVIC
-#define EXTI_Base 0x40010400
-#define NVIC_Base 0xE000E100
-#define EXTI_RTSR *(volatile uint32_t *)(EXTI_Base + 0x08)
-#define EXTI_IMR *(volatile uint32_t *)(EXTI_Base + 0x00)
-#define EXTI_PR *(volatile uint32_t *)(EXTI_Base + 0x14)
-#define NVIC_ISER0 *(volatile uint32_t *)(NVIC_Base + 0x00)
-void Clock_Init()
-{
-	RCC_APB2ENR |= (1<<2);
+void clock_init(){
+
+	GPIOx_CLK_EN('A');
+	GPIOx_CLK_EN('B');
+	AFIO_CLK_EN();
 }
-void GPIOA_Init()
-{
-	GPIOA_CRL |=(1<<2); //Set PA0 as floating input
-	GPIOA_CRH &= 0xFF0FFFFF;
-	GPIOA_CRH |= 0x00200000; //Set as output
+
+void IRQ9_CallBack(){
+	LCD_Send_A_String("IRQ EXTI9 is happened _|-");
+	LCD_Clear_Screen();
 }
+
 int main(void)
 {
-	Clock_Init();
-	GPIOA_Init();
-	AFIO_EXTICR1 |= (0b0000 << 0); //Optional Map EXTI0 line to PA0
-	EXTI_RTSR |= (1<<0); //Make EXTI0 as Rising edge triggered interrupt
-	EXTI_IMR |=(1<<0); //Un-mask interrupt from EXTI0 line
-	NVIC_ISER0 |=(1<<6); //Un-mask Interrupt Request 6 From NVIC
-	while(1);
-}
-void EXTI0_IRQHandler(void)
-{
-	//Interrupt Occurred
-	GPIOA_ODR ^= (1<<13); //Toggle Pin13
-	EXTI_PR |= (1<<0); //ACK EXTI Peripheral Through Pending Register
+	clock_init();
+	LCD_Init();
+
+	EXTI_PinConfig_t pincfg;
+	pincfg.EXTI_PIN = EXTI9PB9;
+	pincfg.Trigger_Case = EXTI_Trigger_RISING;
+	pincfg.IRQ_EN = EXTI_IRQ_Enable;
+	pincfg.P_IRQ_CallBack = IRQ9_CallBack;
+
+	MCAL_EXTI_GPIO_Init(&pincfg);
+
+    /* Loop forever */
+	for(;;);
 }
