@@ -14,15 +14,15 @@ void wait_ms(uint32_t time){
 }
 
 void LCD_Kick(){
-	MCAL_GPIOx_WritePin(GPIOA,EN,GPIO_PIN_SET);
-	wait_ms(50);
-	MCAL_GPIOx_WritePin(GPIOA,EN,GPIO_PIN_RESET);
+	MCAL_GPIOx_WritePin(LCD_PORT,EN,GPIO_PIN_SET);
+	wait_ms(20);
+	MCAL_GPIOx_WritePin(LCD_PORT,EN,GPIO_PIN_RESET);
 }
 
 void LCD_Send_Command (unsigned char CMD){
 	//turn RW off so you can write. turn RS off for command mode.
-	MCAL_GPIOx_WritePin(GPIOA,RW,GPIO_PIN_RESET);
-	MCAL_GPIOx_WritePin(GPIOA,RS,GPIO_PIN_RESET);
+	MCAL_GPIOx_WritePin(LCD_PORT,RW,GPIO_PIN_RESET);
+	MCAL_GPIOx_WritePin(LCD_PORT,RS,GPIO_PIN_RESET);
 
 #ifdef Eight_Bit_MODE
 	//Write the command on D0...D7
@@ -32,10 +32,16 @@ void LCD_Send_Command (unsigned char CMD){
 
 #ifdef FOUR_Bit_MODE
 	//Write the command on D4..D7 first
-	LCD_DATA = (LCD_DATA & 0xff0f) | (CMD & 0xf0);
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_4, Read_Bit(CMD,4));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_5, Read_Bit(CMD,5));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_6, Read_Bit(CMD,6));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_7, Read_Bit(CMD,7));
 	LCD_Kick();
 	//Write the command on D0..D3
-	LCD_DATA = (LCD_DATA & 0xff0f) | (CMD<<4);
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_4, Read_Bit(CMD,0));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_5, Read_Bit(CMD,1));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_6, Read_Bit(CMD,2));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_7, Read_Bit(CMD,3));
 	LCD_Kick();
 #endif
 }
@@ -49,22 +55,22 @@ void LCD_Init(){
 	Pincfg.GPIO_PinNumber = RS;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
-	MCAL_GPIOx_Init(GPIOA,&Pincfg);
+	MCAL_GPIOx_Init(LCD_PORT,&Pincfg);
 
 	//PA[9] OUTPUT Push-Pull
 	Pincfg.GPIO_PinNumber = RW;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
-	MCAL_GPIOx_Init(GPIOA,&Pincfg);
+	MCAL_GPIOx_Init(LCD_PORT,&Pincfg);
 
 	//PA[10] OUTPUT Push-Pull
 	Pincfg.GPIO_PinNumber = EN;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
-	MCAL_GPIOx_Init(GPIOA,&Pincfg);
+	MCAL_GPIOx_Init(LCD_PORT,&Pincfg);
 
 	//turn off enable
-	MCAL_GPIOx_WritePin(GPIOA,EN,GPIO_PIN_RESET);
+	MCAL_GPIOx_WritePin(LCD_PORT,EN,GPIO_PIN_RESET);
 
 #ifdef Eight_Bit_MODE
 	//set the port direction as output so you can send information to the LCD.
@@ -74,7 +80,7 @@ void LCD_Init(){
 		Pincfg.GPIO_PinNumber = pin[i];
 		Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 		Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
-		MCAL_GPIOx_Init(GPIOA,&Pincfg);
+		MCAL_GPIOx_Init(LCD_PORT,&Pincfg);
 	}
 	LCD_Send_Command(LCD_8bit_2Line);
 #endif
@@ -87,7 +93,7 @@ void LCD_Init(){
 		Pincfg.GPIO_PinNumber = pin[i];
 		Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 		Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
-		MCAL_GPIOx_Init(GPIOA,&Pincfg);
+		MCAL_GPIOx_Init(LCD_PORT,&Pincfg);
 	}
 	LCD_Send_Command(0x02);
 	LCD_Send_Command(LCD_4bit_2_Line);
@@ -100,9 +106,9 @@ void LCD_Init(){
 
 void LCD_Send_A_Character (char data){
 	//turn RW off so you can write.
-	MCAL_GPIOx_WritePin(GPIOA,RW,GPIO_PIN_RESET);
+	MCAL_GPIOx_WritePin(LCD_PORT,RW,GPIO_PIN_RESET);
 	//turn RS ON for Data mode.
-	MCAL_GPIOx_WritePin(GPIOA,RS,GPIO_PIN_SET);
+	MCAL_GPIOx_WritePin(LCD_PORT,RS,GPIO_PIN_SET);
 
 #ifdef Eight_Bit_MODE
 	//write data on D0...D7
@@ -112,16 +118,22 @@ void LCD_Send_A_Character (char data){
 
 #ifdef FOUR_Bit_MODE
 	//send D4..D7 first
-	LCD_DATA = (LCD_DATA & 0xff0f) | (data & 0xf0);
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_4, Read_Bit(data,4));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_5, Read_Bit(data,5));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_6, Read_Bit(data,6));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_7, Read_Bit(data,7));
 	LCD_Kick();
 	//send data D0..D3
-	LCD_DATA = (LCD_DATA & 0xff0f) | (data<<4);
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_4, Read_Bit(data,0));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_5, Read_Bit(data,1));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_6, Read_Bit(data,2));
+	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_7, Read_Bit(data,3));
 	LCD_Kick();
 #endif
 }
 
 void LCD_Clear_Screen(){
-	//wait_ms(100);
+	//wait_ms(10);
 	LCD_Send_Command(LCD_Clear_Display);
 }
 
