@@ -22,12 +22,12 @@ void KEYPAD_INIT(void)
 		if(i<4){
 			Pincfg.GPIO_PinNumber = pin[i] ;
 			Pincfg.GPIO_MODE = GPIO_MODE_INPUT_PD;
-			MCAL_GPIOx_Init(GPIOB, &Pincfg);
+			MCAL_GPIOx_Init(KeyPad_PORT, &Pincfg);
 		}else{
 			Pincfg.GPIO_PinNumber = pin[i];
 			Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 			Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
-			MCAL_GPIOx_Init(GPIOB,&Pincfg);
+			MCAL_GPIOx_Init(KeyPad_PORT,&Pincfg);
 		}
 	}
 }
@@ -40,12 +40,12 @@ char KEYPAD_GET_KEY(void)
 	for (i = 0; i < 4; i++)
 	{
 		// Send a high to a particular column of the keypad
-		MCAL_GPIOx_WritePin(GPIOB, keypad_C[i],GPIO_PIN_SET);
+		MCAL_GPIOx_WritePin(KeyPad_PORT, keypad_C[i],GPIO_PIN_SET);
 		for (j = 0; j < 4; j++)
 		{
-			if (MCAL_GPIOx_ReadPin(GPIOB, keypad_R[j])) // Check if is key is pressed
+			if (MCAL_GPIOx_ReadPin(KeyPad_PORT, keypad_R[j])) // Check if is key is pressed
 			{
-				while (MCAL_GPIOx_ReadPin(GPIOB, keypad_R[j])); // Wait for the key to be released (Single pressed)
+				while (MCAL_GPIOx_ReadPin(KeyPad_PORT, keypad_R[j])); // Wait for the key to be released (Single pressed)
 				switch (i)
 				{
 				case 0:
@@ -79,7 +79,7 @@ char KEYPAD_GET_KEY(void)
 			}
 		}
 		delay_ms(10);
-		MCAL_GPIOx_WritePin(GPIOB, keypad_C[i],GPIO_PIN_RESET); //Return the column low again
+		MCAL_GPIOx_WritePin(KeyPad_PORT, keypad_C[i],GPIO_PIN_RESET); //Return the column low again
 	}
 	return 'A'; // Return 'A' if no key is pressed
 }
