@@ -20,8 +20,7 @@ void LCD_Kick(){
 }
 
 void LCD_Send_Command (unsigned char CMD){
-	//turn RW off so you can write. turn RS off for command mode.
-	MCAL_GPIOx_WritePin(LCD_PORT,RW,GPIO_PIN_RESET);
+	//turn RS off for command mode.
 	MCAL_GPIOx_WritePin(LCD_PORT,RS,GPIO_PIN_RESET);
 
 #ifdef Eight_Bit_MODE
@@ -57,12 +56,6 @@ void LCD_Init(){
 	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
 	MCAL_GPIOx_Init(LCD_PORT,&Pincfg);
 
-	//RW OUTPUT Push-Pull
-	Pincfg.GPIO_PinNumber = RW;
-	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
-	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
-	MCAL_GPIOx_Init(LCD_PORT,&Pincfg);
-
 	//EN OUTPUT Push-Pull
 	Pincfg.GPIO_PinNumber = EN;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
@@ -74,7 +67,7 @@ void LCD_Init(){
 
 #ifdef Eight_Bit_MODE
 	//set the port direction as output so you can send information to the LCD.
-	uint16_t pin[8]={GPIO_PIN_0,GPIO_PIN_1,GPIO_PIN_2,GPIO_PIN_3,GPIO_PIN_4,GPIO_PIN_5,GPIO_PIN_6,GPIO_PIN_7};
+	uint16_t pin[8]={D0,D1,D2,D3,D4,D5,D6,D7};
 	int i;
 	for(i=0; i<8; i++){
 		Pincfg.GPIO_PinNumber = pin[i];
@@ -87,7 +80,7 @@ void LCD_Init(){
 
 #ifdef FOUR_Bit_MODE
 	//set the MSB port direction as output so you can send information to the LCD.
-	uint16_t pin[4]={GPIO_PIN_4,GPIO_PIN_5,GPIO_PIN_6,GPIO_PIN_7};
+	uint16_t pin[4]={D4,D5,D6,D7};
 	int i;
 	for(i=0; i<4; i++){
 		Pincfg.GPIO_PinNumber = pin[i];
@@ -105,8 +98,6 @@ void LCD_Init(){
 }
 
 void LCD_Send_A_Character (char data){
-	//turn RW off so you can write.
-	MCAL_GPIOx_WritePin(LCD_PORT,RW,GPIO_PIN_RESET);
 	//turn RS ON for Data mode.
 	MCAL_GPIOx_WritePin(LCD_PORT,RS,GPIO_PIN_SET);
 
