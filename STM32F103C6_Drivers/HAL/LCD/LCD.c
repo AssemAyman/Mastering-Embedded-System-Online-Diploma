@@ -51,19 +51,19 @@ void LCD_Init(){
 	//set the control port direction as output so you can send commands to the LCD.
 	GPIO_PinConfig_t Pincfg;
 
-	//PA[8] OUTPUT Push-Pull
+	//RS OUTPUT Push-Pull
 	Pincfg.GPIO_PinNumber = RS;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
 	MCAL_GPIOx_Init(LCD_PORT,&Pincfg);
 
-	//PA[9] OUTPUT Push-Pull
+	//RW OUTPUT Push-Pull
 	Pincfg.GPIO_PinNumber = RW;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
 	MCAL_GPIOx_Init(LCD_PORT,&Pincfg);
 
-	//PA[10] OUTPUT Push-Pull
+	//EN OUTPUT Push-Pull
 	Pincfg.GPIO_PinNumber = EN;
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 	Pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10M;
