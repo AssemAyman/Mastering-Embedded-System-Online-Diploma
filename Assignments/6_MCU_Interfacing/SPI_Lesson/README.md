@@ -1,3 +1,2 @@
 ![image](https://github.com/AssemAyman/Mastering-Embedded-System-Online-Diploma/assets/107751300/ae432738-a955-4e39-a95d-f1916f3278ef)- ### **[Press to View The Explanation Video](https://drive.google.com/file/d/1E2eLbOizVD5oFNhQLkM26Pvt7ygHG9nZ/view?usp=drive_link)**
 _NOTE: This is only the application code to get Drivers codes press [here](https://github.com/AssemAyman/Mastering-Embedded-System-Online-Diploma/tree/main/STM32F103C6_Drivers)_
-![image](https://github.com/AssemAyman/Mastering-Embedded-System-Online-Diploma/assets/107751300/5eed2d83-1721-49ea-a401-7414a721574f)
