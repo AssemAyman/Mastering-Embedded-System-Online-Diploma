@@ -9,9 +9,9 @@
 #define KEY_PAD_H_
 
 #include "GPIO.h"
-
+/*=========Configurations============*/
 #define KeyPad_PORT		GPIOB
-
+/*==================================*/
 #define R0 GPIO_PIN_0
 #define R1 GPIO_PIN_1
 #define R2 GPIO_PIN_3
