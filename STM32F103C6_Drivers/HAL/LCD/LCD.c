@@ -31,16 +31,16 @@ void LCD_Send_Command (unsigned char CMD){
 
 #ifdef FOUR_Bit_MODE
 	//Write the command on D4..D7 first
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_4, Read_Bit(CMD,4));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_5, Read_Bit(CMD,5));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_6, Read_Bit(CMD,6));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_7, Read_Bit(CMD,7));
+	MCAL_GPIOx_WritePin(LCD_PORT, D4, Read_Bit(CMD,4));
+	MCAL_GPIOx_WritePin(LCD_PORT, D5, Read_Bit(CMD,5));
+	MCAL_GPIOx_WritePin(LCD_PORT, D6, Read_Bit(CMD,6));
+	MCAL_GPIOx_WritePin(LCD_PORT, D7, Read_Bit(CMD,7));
 	LCD_Kick();
 	//Write the command on D0..D3
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_4, Read_Bit(CMD,0));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_5, Read_Bit(CMD,1));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_6, Read_Bit(CMD,2));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_7, Read_Bit(CMD,3));
+	MCAL_GPIOx_WritePin(LCD_PORT, D4, Read_Bit(CMD,0));
+	MCAL_GPIOx_WritePin(LCD_PORT, D5, Read_Bit(CMD,1));
+	MCAL_GPIOx_WritePin(LCD_PORT, D6, Read_Bit(CMD,2));
+	MCAL_GPIOx_WritePin(LCD_PORT, D7, Read_Bit(CMD,3));
 	LCD_Kick();
 #endif
 }
@@ -109,16 +109,16 @@ void LCD_Send_A_Character (char data){
 
 #ifdef FOUR_Bit_MODE
 	//send D4..D7 first
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_4, Read_Bit(data,4));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_5, Read_Bit(data,5));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_6, Read_Bit(data,6));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_7, Read_Bit(data,7));
+	MCAL_GPIOx_WritePin(LCD_PORT, D4, Read_Bit(data,4));
+	MCAL_GPIOx_WritePin(LCD_PORT, D5, Read_Bit(data,5));
+	MCAL_GPIOx_WritePin(LCD_PORT, D6, Read_Bit(data,6));
+	MCAL_GPIOx_WritePin(LCD_PORT, D7, Read_Bit(data,7));
 	LCD_Kick();
 	//send data D0..D3
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_4, Read_Bit(data,0));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_5, Read_Bit(data,1));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_6, Read_Bit(data,2));
-	MCAL_GPIOx_WritePin(LCD_PORT, GPIO_PIN_7, Read_Bit(data,3));
+	MCAL_GPIOx_WritePin(LCD_PORT, D4, Read_Bit(data,0));
+	MCAL_GPIOx_WritePin(LCD_PORT, D5, Read_Bit(data,1));
+	MCAL_GPIOx_WritePin(LCD_PORT, D6, Read_Bit(data,2));
+	MCAL_GPIOx_WritePin(LCD_PORT, D7, Read_Bit(data,3));
 	LCD_Kick();
 #endif
 }
