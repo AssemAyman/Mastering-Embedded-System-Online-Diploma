@@ -14,11 +14,26 @@
 #define Read_Bit(reg,index)		((reg & 1<<index)>>index)
 
 /*=========Configurations============*/
-#define LCD_DATA 	GPIOA->ODR
-#define LCD_PORT	GPIOA
+//#define Eight_Bit_MODE
+#define FOUR_Bit_MODE
+
+#define LCD_DATA 	GPIOB->ODR
+#define LCD_PORT	GPIOB
+
 #define RS 			GPIO_PIN_8
-#define RW 			GPIO_PIN_9
-#define EN 			GPIO_PIN_10
+#define EN 			GPIO_PIN_11
+
+#ifdef Eight_Bit_MODE
+#define D0			GPIO_PIN_0
+#define D1			GPIO_PIN_1
+#define D2			GPIO_PIN_2
+#define D3			GPIO_PIN_3
+#endif
+
+#define D4			GPIO_PIN_12
+#define D5			GPIO_PIN_13
+#define D6			GPIO_PIN_14
+#define D7			GPIO_PIN_15
 /*==================================*/
 
 #define LCD_8bit_1Line        0x30
@@ -39,8 +54,6 @@
 #define LCD_Start_At_Beginning_Of_Second_Line 0xC0
 #define LCD_Two_Lines_5_7_Matrix 0x38
 #define Data_Shift   4
-//#define Eight_Bit_MODE
-#define FOUR_Bit_MODE
 
 extern void LCD_Send_Command (unsigned char CMD);
 extern void LCD_Send_A_Character (char data);
