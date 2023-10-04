@@ -136,7 +136,7 @@ void LCD_Goto_XY(unsigned char line,unsigned char position){
 }
 
 void LCD_Send_A_String(char* str){
-	char count = 0;
+	static char count = 0;
 	while(*str != 0){
 		LCD_Send_A_Character(*str++);
 		count++;
