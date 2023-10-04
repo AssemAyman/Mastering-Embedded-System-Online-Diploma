@@ -81,5 +81,5 @@ char KEYPAD_GET_KEY(void)
 		delay_ms(10);
 		MCAL_GPIOx_WritePin(KeyPad_PORT, keypad_C[i],GPIO_PIN_RESET); //Return the column low again
 	}
-	return 'A'; // Return 'A' if no key is pressed
+	return '\0'; // Return '\0' if no key is pressed
 }
