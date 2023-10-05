@@ -47,10 +47,11 @@ void ENTRY_Gate(){
 
 	MCAL_USART_ReceiveData(USART1, &buffer, disable);
 
-	// Check if the entered id matches or not
 	char isFound = 0;
 
+	// Check if there are free slots or not
 	if(free_slots){
+		// Check if the entered id matches or not
 		for(int i = 0; i<3; i++){
 
 			if(ID[i] == buffer){
@@ -74,7 +75,7 @@ void ENTRY_Gate(){
 				free_slots_available();
 			}
 		}
-	}else{
+	}else{	/* if there are no free slots */
 		LCD_Clear_Screen(ENTRY_LCD);
 		LCD_Send_A_String("Parking is full", ENTRY_LCD);
 		dms(80);
@@ -98,10 +99,11 @@ void EXIT_Gate(){
 
 	MCAL_USART_ReceiveData(USART2, &buffer, disable);
 
-	// Check if the entered id matches or not
 	char isFound = 0;
 
+	// Checks if there are cars inside or not
 	if(free_slots <3){
+		// Check if the entered id matches or not
 		for(int i =0; i<3; i++){
 			if(ID[i] == buffer){
 				/*if entered id is found*/
@@ -159,7 +161,7 @@ int main(void)
 	MCAL_USART_Init(USART2, &usart_cfg);
 	MCAL_UASRT_GPIO_Set_Pins(USART2);
 
-	//ADMIN DashBoard ECU3
+	//ADMIN DashBoard ECU
 	LCD_Send_A_String("Enter users' IDs",ADMIN_LCD);
 	/* Store IDs of the users */
 	for(int i = 0; i<3; i++){
