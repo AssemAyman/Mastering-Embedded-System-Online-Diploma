@@ -1,11 +1,11 @@
-- ### **[Press to View the Explanation Video]()**
+- ### **[Press to View the Explanation Video](https://drive.google.com/file/d/1gCX5C7jghvI0Mb-X6fIB2iERr6oYLuoA/view?usp=sharing)**
 
 ![Capture](https://github.com/AssemAyman/Mastering-Embedded-System-Online-Diploma/assets/107751300/153063c7-0cd6-4c79-805b-7d5bf9d2715d)
 
 # Description:
 
 The Smart Parking project is a simulation of a parking system that incorporates two gates, an entry gate, and an exit gate.
-The system allows an administrator to input authentic IDs initially.Subsequently, when users utilize the RFID scanner for entry or exit, the system processes the request and permits only authentic IDs.
+The system allows an administrator to input authentic IDs initially. Subsequently, when users utilize the RFID scanner for entry or exit, the system processes the request and permits only authentic IDs.
 Additionally, the system checks the availability of parking slots before granting entry.
 
 # Features:
