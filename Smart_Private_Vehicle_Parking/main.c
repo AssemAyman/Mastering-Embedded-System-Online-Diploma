@@ -67,7 +67,7 @@ void ENTRY_Gate(){
 				dms(800);
 				//Checks if the car has passed first to close the gate
 				while(MCAL_GPIOx_ReadPin(GPIOA, GPIO_PIN_7));
-				/* Close the Exit gate */
+				/* Close the Entry gate */
 				Servo1_Entry_Gate(Down);
 
 				LCD_Clear_Screen(ENTRY_LCD);
