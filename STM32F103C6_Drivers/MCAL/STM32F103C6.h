@@ -36,11 +36,13 @@
 //-----------------------------
 //Base addresses for  APB1 BUS Peripherals
 //-----------------------------
-#define USART2_BASE 0x40004400UL
-#define USART3_BASE 0x40004800UL
-#define SPI2_BASE	0x40003800UL
-#define I2C1_BASE	0x40005400UL
-#define I2C2_BASE	0x40005800UL
+#define USART2_BASE 	0x40004400UL
+#define USART3_BASE 	0x40004800UL
+#define SPI2_BASE		0x40003800UL
+#define I2C1_BASE		0x40005400UL
+#define I2C2_BASE		0x40005800UL
+#define TIMER2_BASE		0x40000000UL
+#define TIMER3_BASE		0x40000400UL
 //-----------------------------
 //Base addresses for  APB2 BUS Peripherals
 //-----------------------------
@@ -144,6 +146,29 @@ typedef struct{
 	vuint32_t TRISE;
 }I2Cx_REG;
 //-*-*-*-*-*-*-*-*-*-*-*-
+//Peripheral register: TIMER2 To TIMER5
+//-*-*-*-*-*-*-*-*-*-*-*
+typedef struct{
+	vuint32_t CR1;
+	vuint32_t CR2;
+	vuint32_t SMCR;
+	vuint32_t DIER;
+	vuint32_t SR;
+	vuint32_t EGR;
+	vuint32_t CCMR1;
+	vuint32_t CCMR2;
+	vuint32_t CCER;
+	vuint32_t CNT;
+	vuint32_t PSC;
+	vuint32_t ARR;
+	uint32_t RESERVED1;
+	vuint32_t CCR[4];
+	uint32_t RESERVED2;
+	vuint32_t DCR;
+	vuint32_t DMAR;
+}TIMERx_REG;
+
+//-*-*-*-*-*-*-*-*-*-*-*-
 //Peripheral Instants:
 //-*-*-*-*-*-*-*-*-*-*-*
 #define GPIOA		((GPIOx_REG *) GPIOA_BASE)
@@ -163,6 +188,8 @@ typedef struct{
 #define SPI2		((SPIx_REG  *) SPI2_BASE)
 #define I2C1		((I2Cx_REG  *)I2C1_BASE)
 #define I2C2		((I2Cx_REG  *)I2C2_BASE)
+#define TIMER2		((TIMERx_REG *)(TIMER2_BASE))
+#define TIMER3		((TIMERx_REG *)(TIMER3_BASE))
 //-*-*-*-*-*-*-*-*-*-*-*-
 //clock enable Macros:
 //-*-*-*-*-*-*-*-*-*-*-*
@@ -175,10 +202,12 @@ typedef struct{
 #define SPI2_CLK_EN()    RCC->APB1ENR |= 1<<14
 #define I2C1_CLK_EN()	 RCC->APB1ENR |= 1<<21
 #define I2C2_CLK_EN()	 RCC->APB1ENR |= 1<<22
+#define TIMER2_CLK_EN()  RCC->APB1ENR |= 1<<0
+#define TIMER3_CLK_EN()  RCC->APB1ENR |= 1<<1
 //-*-*-*-*-*-*-*-*-*-*-*-*-
 //NVIC IRQ Enable/Disable Macros:
 //-*-*-*-*-*-*-*-*-*-*-*-*-
-//Enable EXTI IRQ
+//Enable EXTIx IRQ
 #define NVIC_IRQ6_EXTI0_Enable()		NVIC_ISER0 |=1<<6
 #define NVIC_IRQ7_EXTI1_Enable()		NVIC_ISER0 |=1<<7
 #define NVIC_IRQ8_EXTI2_Enable()		NVIC_ISER0 |=1<<8
@@ -191,7 +220,7 @@ typedef struct{
 #define NVIC_IRQ38_USART2_Enable()		NVIC_ISER1 |=1<<6
 #define NVIC_IRQ39_USART3_Enable()		NVIC_ISER1 |=1<<7
 
-//Disable EXTI IRQ
+//Disable EXTIx IRQ
 #define NVIC_IRQ6_EXTI0_Disable()		NVIC_ICER0 |=1<<6
 #define NVIC_IRQ7_EXTI1_Disable()		NVIC_ICER0 |=1<<7
 #define NVIC_IRQ8_EXTI2_Disable()		NVIC_ICER0 |=1<<8
@@ -199,27 +228,33 @@ typedef struct{
 #define NVIC_IRQ10_EXTI4_Disable()		NVIC_ICER0 |=1<<10
 #define NVIC_IRQ23_EXTI5_9_Disable()	NVIC_ICER0 |=1<<23
 #define NVIC_IRQ40_EXTI10_15_Disable()	NVIC_ICER1 |=1<<8
-//Disable USART IRQ
+//Disable USARTx IRQ
 #define NVIC_IRQ37_USART1_Disable()		NVIC_ICER1 |=1<<5
 #define NVIC_IRQ38_USART2_Disable()		NVIC_ICER1 |=1<<6
 #define NVIC_IRQ39_USART3_Disable()		NVIC_ICER1 |=1<<7
 
-//Enable SPI IRQ
+//Enable SPIx IRQ
 #define NVIC_IRQ35_SPI1_Enable()		NVIC_ISER1 |=1<<3
 #define NVIC_IRQ36_SPI2_Enable()		NVIC_ISER1 |=1<<4
-//Disable SPI IRQ
+//Disable SPIx IRQ
 #define NVIC_IRQ35_SPI1_Disable()		NVIC_ICER1 |=1<<3
 #define NVIC_IRQ36_SPI2_Disable()		NVIC_ICER1 |=1<<4
 
-//Enable I2C IRQ
+//Enable I2Cx IRQ
 #define NVIC_IRQ31_I2C1_EV_Enable()		NVIC_ISER0 |=1<<31
 #define NVIC_IRQ32_I2C1_ER_Enable()		NVIC_ISER1 |=1<<0
 #define NVIC_IRQ33_I2C2_EV_Enable()		NVIC_ISER1 |=1<<1
 #define NVIC_IRQ34_I2C2_ER_Enable()		NVIC_ISER1 |=1<<2
-//Disable I2C IRQ
+//Disable I2Cx IRQ
 #define NVIC_IRQ31_I2C1_EV_Disable()	NVIC_ICER0 |=1<<31
 #define NVIC_IRQ32_I2C1_ER_Disable()	NVIC_ICER1 |=1<<0
 #define NVIC_IRQ33_I2C2_EV_Disable()	NVIC_ICER1 |=1<<1
 #define NVIC_IRQ34_I2C2_ER_Disable()	NVIC_ICER1 |=1<<2
 
+//Enable TIMERx IRQ
+#define NVIC_IRQ28_TIMER2_Enable()		NVIC_ISER0 |=1<<28
+#define NVIC_IRQ29_TIMER3_Enable()		NVIC_ISER0 |=1<<29
+//Disable TIMERx IRQ
+#define NVIC_IRQ28_TIMER2_Disable()		NVIC_ICER0 |=1<<28
+#define NVIC_IRQ29_TIMER3_Disable()		NVIC_ICER0 |=1<<29
 #endif /* STM32F103C6_H_ */
