@@ -18,5 +18,6 @@ extern uint32_t MCAL_RCC_GetSYSCLK();
 extern uint32_t MCAL_RCC_GetHCLK();
 extern uint32_t MCAL_RCC_GetPCLK1();
 extern uint32_t MCAL_RCC_GetPCLK2();
+extern uint32_t MCAL_RCC_TIMXCLK();
 
 #endif /* RCC_H_ */
