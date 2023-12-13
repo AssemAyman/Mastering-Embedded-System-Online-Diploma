@@ -42,3 +42,11 @@ uint32_t MCAL_RCC_GetPCLK2(){
 	// Bits 13:11 PPRE2: APB high-speed pre-scaler (APB2)
 	return MCAL_RCC_GetHCLK() / APBPrescaler[(RCC->CFGR & 0b111<<11)>>11];
 }
+
+uint32_t MCAL_RCC_TIMXCLK(){
+
+	if(APBPrescaler[(RCC->CFGR & 0b111<<8)>>8] == 1)
+		return MCAL_RCC_GetPCLK1();
+	else
+		return MCAL_RCC_GetPCLK1() * 2;
+}
