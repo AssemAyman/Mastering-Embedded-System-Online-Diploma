@@ -33,6 +33,7 @@ int main(void)
 	Timer2_init();
 	Timer3_init();
 
+	//Make A0 (Trigger pin) as an output
 	GPIO_PinConfig_t A0;
 	A0.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
 	A0.GPIO_OUTPUT_SPEED = GPIO_SPEED_2M;
@@ -40,6 +41,7 @@ int main(void)
 
 	MCAL_GPIOx_Init(GPIOA, &A0);
 
+	//Initialize uart to use Bluetooth module to send distance to the mobile
 	USART_Config_t USART1cfg ;
 
 	USART1cfg.USART_Mode = USART_Mode_Tx;
@@ -55,7 +57,7 @@ int main(void)
 
 	MCAL_UASRT_GPIO_Set_Pins(USART1);
 
-
+	//Make A1(Echo pin) an external interrupt pin in both rising and falling
 	EXTI_PinConfig_t pincfg;
 
 	pincfg.EXTI_PIN = EXTI1PA1;
@@ -66,6 +68,7 @@ int main(void)
 	MCAL_EXTI_GPIO_Init(&pincfg);
 
 	while(1){
+		//Send a trigger pulse to the ultrasonic
 		MCAL_GPIOx_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
 		dms(30);
 		MCAL_GPIOx_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
