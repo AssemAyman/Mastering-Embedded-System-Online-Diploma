@@ -89,6 +89,7 @@ void Echo(){
 		char text[7]={0};
 		u_int32_t distance = (170 * Time_Claculation(second_entery)) / 10000;
 		sprintf(text,"%lucm\n",distance);
+		//Send the distance to the Bluetooth module
 		MCAL_USART_SendData(USART1, (uint16_t*)&text[0], enable);
 		MCAL_USART_SendData(USART1, (uint16_t*)&text[1], enable);
 		MCAL_USART_SendData(USART1, (uint16_t*)&text[2], enable);
