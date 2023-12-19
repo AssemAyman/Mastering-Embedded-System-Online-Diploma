@@ -24,7 +24,7 @@
 #include "RCC.h"
 #include <stdio.h>
 
-extern void Echo();
+void Echo();
 
 int main(void)
 {
