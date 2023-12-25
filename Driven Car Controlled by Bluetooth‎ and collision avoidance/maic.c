@@ -12,7 +12,7 @@ void Echo();
 /*==========Genaric variables===========*/
 vuint32_t distance;
 uint16_t data;
-vuint8_t moving_Forward = 0;;
+vuint8_t moving_Forward = 0;
 char text[8];
 /*=====================================*/
 
