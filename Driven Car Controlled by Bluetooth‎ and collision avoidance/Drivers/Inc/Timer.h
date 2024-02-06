@@ -9,7 +9,6 @@
 #include "STM32F103C6.h"
 #include "RCC.h"
 
-/*=================Timer2======================*/
 typedef volatile enum{
 	first_entry,
 	second_entery
