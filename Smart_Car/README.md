@@ -29,5 +29,9 @@ A mobile application controls the car via a Bluetooth module (HC-05). Also, an U
 6. Buzzer
 7. Batteries
 
-
+# Test Cases:
+1. Test Case 1: Free Driving.
+2. Test Case 2: If the car is already moving forward and it faces an obstacle in a range <= 30 CM it should stop.
+3. Test Case 3: If the car is not moving and there is an obstacle in a range <= 30 CM, if the driver wants to move forward the car shall not move.
    
+**To watch the demonstration video of these test cases press [here](https://drive.google.com/file/d/1FSzWr5nOK277A6aLxLW0w2PQ-fO9cMTV/view?usp=drive_link)**
