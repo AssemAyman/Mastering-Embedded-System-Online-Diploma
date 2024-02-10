@@ -1,4 +1,4 @@
-- ### **[Press here to View the Explanation Video](https://drive.google.com/file/d/1gCX5C7jghvI0Mb-X6fIB2iERr6oYLuoA/view?usp=sharing)**
+- ### ** To View the Explanation Video Press [here](https://drive.google.com/file/d/1gCX5C7jghvI0Mb-X6fIB2iERr6oYLuoA/view?usp=sharing)**
 
 ![Capture](https://github.com/AssemAyman/Mastering-Embedded-System-Online-Diploma/assets/107751300/153063c7-0cd6-4c79-805b-7d5bf9d2715d)
 
