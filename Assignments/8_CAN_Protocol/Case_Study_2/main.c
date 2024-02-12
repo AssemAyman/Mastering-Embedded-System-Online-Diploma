@@ -129,13 +129,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	CAN_RX(&Rx_ID, &Rx_DLC, &speed, disable);
 }
 
-void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan)
-{
-	/*!< TxMailbox 0 transmit failure due to transmit error    */
-	if((hcan->ErrorCode & HAL_CAN_ERROR_TX_TERR0) == HAL_CAN_ERROR_TX_TERR0){
-
-	}
-}
 /* USER CODE END 0 */
 
 /**
