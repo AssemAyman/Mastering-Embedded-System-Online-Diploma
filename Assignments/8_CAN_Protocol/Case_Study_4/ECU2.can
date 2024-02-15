@@ -1,0 +1,29 @@
+﻿/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{
+  int speed = 0;
+  message ECU2_MSG ECU2_message;
+}
+
+on message ECU1_MSG
+{
+  write("ECU2: Recieved Acc/DeAcc from ECU1.");
+  
+  if(this.Acc_or_DeAcc.phys == 1) //Acceleration
+  {
+    if(speed < 255)
+      speed++;
+  }
+  else  //De-Acceleration
+  {
+    if(speed > 0)
+      speed--;
+  }
+    ECU2_message.Speed.phys = speed;
+    output(ECU2_message); 
+}
