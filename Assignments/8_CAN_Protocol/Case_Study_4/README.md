@@ -1,4 +1,4 @@
-# CANoe with Two ECUs Based on CAPL script
+# Vector CANoe with Two ECUs Based on CAPL script
 In this lab, There are two virtual ECUs implemented by CAPL script and they are communicating with each other using CAN protocol.
 
 ![image](https://github.com/AssemAyman/Mastering-Embedded-System-Online-Diploma/assets/107751300/028168f8-19b8-4241-b9f5-1b21f21ea500)
