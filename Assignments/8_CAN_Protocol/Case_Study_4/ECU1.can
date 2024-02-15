@@ -1,0 +1,31 @@
+/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{
+  msTimer send_timer;
+  const int timerPeriod = 1000;
+  message ECU1_MSG ECU1_message;
+  int ACC = 0;
+}
+
+on start
+{
+  setTimer(send_timer,timerPeriod);
+}
+
+on message ECU2_MSG
+{
+  write("ECU1: Recieved the speed from ECU2.");
+}
+
+on timer send_timer
+{
+  ACC = @sysvar::ACC_System;
+  ECU1_message.Acc_or_DeAcc.phys = ACC;
+  output(ECU1_message); 
+  setTimer(send_timer,timerPeriod);
+}
