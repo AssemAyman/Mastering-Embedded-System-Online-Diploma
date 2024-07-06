@@ -31,7 +31,7 @@ FIFO_Status_t FIFO_enqueue(FIFO_t* FIFO_ptr,Element_Type item){
 	FIFO_ptr->count++;
 
 	//if head is at the end of buffer,it returns back to the base
-	if(FIFO_ptr->head == FIFO_ptr->base + FIFO_ptr->length * sizeof(Element_Type))
+	if(FIFO_ptr->head == FIFO_ptr->base + FIFO_ptr->length)
 		FIFO_ptr->head = FIFO_ptr->base;
 
 	return FIFO_NO_Error;
@@ -46,7 +46,7 @@ FIFO_Status_t FIFO_dequeue(FIFO_t* FIFO_ptr,Element_Type* item){
 	FIFO_ptr->count--;
 
 	//if tail is at the end of buffer,it returns back to the base
-	if(FIFO_ptr->tail == FIFO_ptr->base + FIFO_ptr->length * sizeof(Element_Type))
+	if(FIFO_ptr->tail == FIFO_ptr->base + FIFO_ptr->length)
 		FIFO_ptr->tail = FIFO_ptr->base;
 
 	return FIFO_NO_Error;
