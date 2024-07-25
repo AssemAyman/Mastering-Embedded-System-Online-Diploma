@@ -25,7 +25,13 @@ The project is organized into the following directories:
 - **createTask()**: Creates the task object in the OS and initializes the task's stack area.
 - **activateTask()**: Sends a task to the ready queue to be scheduled.
 - **terminateTask()**: Sends a task to the suspended state.
-- **Task_Wait**: Sends a task to the waiting state for a specific amount of Ticks.
-- **AcquireMutex**: Tries to acquire a mutex if available.
-- **ReleaseMutex**: Releases a mutex and starts the next task that is in the queue (if found).
+- **Task_Wait()**: Sends a task to the waiting state for a specific amount of Ticks.
+- **AcquireMutex()**: Tries to acquire a mutex if available.
+- **ReleaseMutex()**: Releases a mutex and starts the next task that is in the queue (if found).
 
+# Examples
+
+1- No task is running so the idle task will be running.
+2- Three Tasks with the same priority running with round robin mechanism.
+3- Three Tasks, each one running with a specific delay, Task1 runs every 100ms, Task2 every 300ms, Task3 every 500ms.
+4- 
