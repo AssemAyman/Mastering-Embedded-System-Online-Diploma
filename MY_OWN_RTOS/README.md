@@ -31,7 +31,15 @@ The project is organized into the following directories:
 
 # Examples
 
-1- No task is running so the idle task will be running.
-2- Three Tasks with the same priority running with round robin mechanism.
-3- Three Tasks, each one running with a specific delay, Task1 runs every 100ms, Task2 every 300ms, Task3 every 500ms.
-4- 
+1. No task is running so the idle task will be running.
+ ![Idle-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/866aa10a-5d54-4546-b628-8487efebcad0)
+
+2. Three Tasks with the same priority running with round robin mechanism.
+ ![RoundRobin-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/34fce437-d03f-45a6-934f-f4c0ac8851f1)
+  
+3. Three Tasks, each running with a specific delay, Task1 runs every 100ms, Task2 every 300ms, and Task3 every 500ms.
+ ![Wait-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/5554b74d-518d-49ac-972b-10c611e8af93)
+ 
+4. Four Tasks with different priorities. _Taks1<Task2<Task3<Task4_
+![priority-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/ea7c6834-feee-46b4-abc3-c984363322c8)
+
