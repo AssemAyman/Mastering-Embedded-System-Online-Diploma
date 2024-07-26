@@ -1,3 +1,9 @@
+# Features
+- Featuring a full-preemptive priority-based scheduler.
+- Supports a round-robin policy for same-priority tasks.
+- For no tasks in Scheduler Table IDLE Task will be running.
+- Supports Mutex as a Locking Mechanism.
+
 # Project Structure
 The project is organized into the following directories:
 
