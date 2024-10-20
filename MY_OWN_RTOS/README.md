@@ -28,12 +28,12 @@ The project is organized into the following directories:
 
 - **MY_RTOS_Init()**: Initializes the OS control and buffers.
 - **MY_RTOS_Start()**: Starts the OS scheduler to begin running tasks.
-- **createTask()**: Creates the task object in the OS and initializes the task's stack area.
-- **activateTask()**: Sends a task to the ready queue to be scheduled.
-- **terminateTask()**: Sends a task to the suspended state.
-- **Task_Wait()**: Sends a task to the waiting state for a specific amount of Ticks.
-- **AcquireMutex()**: Tries to acquire a mutex if available.
-- **ReleaseMutex()**: Releases a mutex and starts the next task that is in the queue (if found).
+- **MY_RTOS_createTask()**: Creates the task object in the OS and initializes the task's stack area.
+- **MY_RTOS_activateTask()**: Sends a task to the ready queue to be scheduled.
+- **MY_RTOS_terminateTask()**: Sends a task to the suspended state.
+- **MY_RTOS_Task_Wait()**: Sends a task to the waiting state for a specific amount of Ticks.
+- **MY_RTOS_AcquireMutex()**: Tries to acquire a mutex if available.
+- **MY_RTOS_ReleaseMutex()**: Releases a mutex and starts the next task that is in the queue (if found).
 
 # Examples
 
