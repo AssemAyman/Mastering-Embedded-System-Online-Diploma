@@ -125,6 +125,8 @@ void MCAL_I2C_DeInit(I2Cx_REG* I2Cx){
  */
 void MCAL_I2C_GPIO_Set_Pins(I2Cx_REG* I2Cx){
 
+	GPIOx_CLK_EN('B');
+	
 	GPIO_PinConfig_t Pincfg;
 
 	Pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_AF_OD;
