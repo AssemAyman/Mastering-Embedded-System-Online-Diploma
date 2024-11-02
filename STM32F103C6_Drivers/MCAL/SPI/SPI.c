@@ -113,6 +113,9 @@ void MCAL_SPI_GPIO_Set_Pins(SPIx_REG* SPIx){
 	GPIO_PinConfig_t GPIOcfg;
 
 	if(SPIx == SPI1){
+
+		GPIOx_CLK_EN('A');
+		
 		//in case of SPI1 is master
 		if(g_SPI_Config[0]->SPI_Mode == SPI_MODE_Master){
 
@@ -180,6 +183,9 @@ void MCAL_SPI_GPIO_Set_Pins(SPIx_REG* SPIx){
 	}
 
 	else if(SPIx == SPI2){
+
+		GPIOx_CLK_EN('B');
+		
 		//in case of SPI2 is master
 		if(g_SPI_Config[1]->SPI_Mode == SPI_MODE_Master){
 
