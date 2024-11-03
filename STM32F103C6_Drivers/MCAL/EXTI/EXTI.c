@@ -32,8 +32,6 @@ void MCAL_EXTI_GPIO_Init(EXTI_PinConfig_t* EXTI_Config){
 	//2- Configure AFIO to Select the wanted EXTI Line with PORT A or B or C or D
 	uint8_t EXTICR_index 	 		 = (EXTI_Config->EXTI_PIN.EXTIx)/4;
 	uint8_t EXTICR_BitField_position = ((EXTI_Config->EXTI_PIN.EXTIx)%4)*4;
-
-	AFIO_CLK_EN();
 	
 	AFIO->EXTICR[EXTICR_index] &= ~(0xf <<EXTICR_BitField_position); //Clear the four bit first
 	AFIO->EXTICR[EXTICR_index] |= AFIO_GPIO_EXTI_Mapping(EXTI_Config->EXTI_PIN.GPIOx) << EXTICR_BitField_position;
