@@ -89,8 +89,8 @@ typedef struct{
 
 
 typedef enum{
-	disable,
-	enable
+	disabled,
+	enabled
 }Polling_Mechanism;
 
 /*================== Baud rate Calculations ================*/
