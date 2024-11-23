@@ -137,7 +137,7 @@ void MCAL_USART_DeInit(USARTx_REG* USARTx){
 void MCAL_USART_SendData(USARTx_REG* USARTx,uint16_t* pTxbuffer,Polling_Mechanism Polling){
 
 	/* 1. Wait until TXE flag is set in the SR */
-	if(Polling == enable)
+	if(Polling == enabled)
 		while(!(USARTx->SR & 1<<7));
 
 	/* 2. Check the USART_WordLength item for 9-bit or 8-bit in a frame */
@@ -292,7 +292,7 @@ void MCAL_UASRT_GPIO_Set_Pins(USARTx_REG* USARTx){
 void MCAL_USART_ReceiveData(USARTx_REG* USARTx,uint16_t* pRxbuffer,Polling_Mechanism Polling){
 
 	/* 1. Wait until RXNE flag is set in the SR */
-	if(Polling == enable)
+	if(Polling == enabled)
 		while(!(USARTx->SR & 1<<5));
 
 	/* 2. Check the USART_WordLength item for 9-bit or 8-bit in a frame and take into consideration the parity*/
